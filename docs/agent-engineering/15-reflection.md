@@ -10,6 +10,8 @@ Agent 执行失败后，有两种做法。
 
 Reflection 属于第二种。
 
+![Reflection 只有进入下一轮 Decision 才有价值](/diagrams/agent/reflection.svg)
+
 ## Reflection 真正需要什么
 
 不是让模型写一段自我感想。
