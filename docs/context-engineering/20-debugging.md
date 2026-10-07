@@ -76,6 +76,8 @@ RAG 检索不错但答案仍差
 
 这不是死规则，只是起始定位。
 
+Context 调试也可能得到一个重要结论：**根因不在 Context**。例如证据已经完整、选择和形态也合理，但模型仍然推导错误，那么问题应该继续交回 Prompt / Process、Agent Decision 或模型能力层，而不是继续调 Top-K。
+
 ## Context Trace 是调试前提
 
 对重要 Agent，至少要能还原一次调用时：
