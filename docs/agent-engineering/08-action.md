@@ -1,60 +1,67 @@
-# 08｜Action：Agent 怎样改变世界
+# 08｜Action：Agent 怎样把决定变成现实
 
-如果模型只能生成文本，它最多是一个会建议下一步的助手。
+Decision 只是“下一步想做什么”。
 
-Agent 真正进入环境，要靠 Action。
+Action 才把这个决定送进外部世界。
 
-Action 可以是：
+~~~text
+Decision: 需要确认订单状态
+↓
+Action: 调用 get_order_status(order_id)
+↓
+Environment: 返回真实订单数据
+~~~
 
-- 搜索；
-- 查询数据库；
-- 调 API；
-- 运行代码；
-- 修改文件；
-- 发消息；
-- 操作浏览器；
-- 启动另一个 Agent。
+没有 Action，模型最多只能建议。
 
-## Tool Schema 是 Action Contract
+## Action 的第一件事是区分副作用
 
-一个工具至少需要说清楚：
+不是所有动作风险相同。
 
-- 它做什么；
-- 什么时候适用；
-- 参数；
-- 返回值；
-- 失败方式；
-- 副作用。
+可以先粗分成：
 
-如果两个工具描述含糊或重叠，模型会更容易选错。
+### Read-only
 
-## Action 要区分读和写
+搜索、查询、读取文件。
 
-查询天气和删除数据都是 Tool Call，但风险完全不同。
+即使失败，通常不会改变外部状态。
 
-可以粗略分成：
+### Reversible Write
 
-- Read-only；
-- Reversible Write；
-- Irreversible / High-risk Write。
+修改草稿、创建临时文件、更新可回滚配置。
 
-不同等级应该有不同权限和审批策略。
+### Irreversible / High-risk Write
 
-## Action 成功不等于任务成功
+付款、删除数据、发布生产、向外发送正式内容。
 
-工具返回 200，只说明调用成功。
+越往后，越不能只靠模型一句“我认为可以执行”。
 
-它不保证：
+## Action 需要执行语义
 
-- 数据符合预期；
-- 文件真的改对；
-- 邮件内容正确；
-- 任务目标已经推进。
+Agent 至少应该知道：
 
-所以每个 Action 后都需要 Observation 和 Feedback。
+- 调用是否成功；
+- 是否产生副作用；
+- 是否可以安全重试；
+- 是否需要审批；
+- 失败后世界处于什么状态。
+
+这些信息会决定下一轮如何处理。
+
+## “调用成功”和“任务成功”是两回事
+
+HTTP 200 只能证明接口执行成功。
+
+它不证明：
+
+- 改动符合 Goal；
+- 数据正确；
+- 用户真正得到想要的结果。
+
+所以 Action 后必须有 Observation 和 Feedback。
 
 ## 地图坐标
 
-Action 是 Agent 影响外部世界的接口。
+Action 是 Agent 与环境之间的执行边界。
 
-Function Calling、Computer Use、MCP Tool 都属于这一层。
+这一章关注的是**动作的风险和执行语义**。第 18 章再讨论怎样把具体 API 设计成模型容易使用的 Tool。

@@ -1,62 +1,67 @@
-# 20｜Subagent：什么时候值得再启动一个 Loop
+# 20｜Subagent：把一个有限子任务交给另一个 Loop
 
-复杂任务里，一个 Agent 可以把子任务交给另一个 Agent。
+Subagent 的重点不在“多一个 Agent”。
 
-这就是 Subagent。
+而在于：
 
-但它的价值不在于“多一个模型看起来更强”。
+> 主 Agent 能否把一个边界清楚的子问题交出去，然后只接回需要的结果？
 
-## 为什么使用 Subagent
+## 什么情况下值得拆出 Subagent
 
-### Context Isolation
+### Context 太独立
 
-子任务有大量独立材料，不值得塞进主 Agent。
+例如主 Agent 只需要“找出与这个 Bug 相关的文件”，而搜索过程会产生大量仓库上下文。
 
-### 专门能力
+让 Search Subagent 独立完成，可以避免污染主 Context。
 
-子任务需要不同工具、指令或模型。
+### 工具不同
 
-### 并行
+一个子任务需要浏览器，另一个只需要代码工具。
 
-多个独立子任务可以同时执行。
+### 可以并行
 
-### 责任边界
+多个互不依赖的研究任务可以同时执行。
 
-主 Agent 只负责计划和汇总，子 Agent 负责具体工作。
+### 责任边界清楚
 
-## Handoff 要包含什么
+主 Agent 负责计划和汇总，子 Agent 负责某个明确产物。
 
-把一句“帮我研究这个”扔给 Subagent，问题很大。
+## Handoff 是一份子任务合同
 
-至少要传：
+不要只传：
+
+> 帮我研究一下。
+
+至少要明确：
 
 - Goal；
 - Scope；
 - 必要 Context；
-- Output Contract；
+- 可用 Tool；
+- Output；
 - Constraints；
 - Completion Criteria。
 
-也就是给它一个完整、有限的子任务。
+这样 Subagent 才不是另一个自由聊天窗口。
 
-## 返回结果不要带整段历史
+## 返回结果应该被压缩成产物
 
-Subagent 完成后，主 Agent 通常需要的是：
+主 Agent 通常需要：
 
-- 结论；
-- 证据；
-- 风险；
-- 未解决问题；
-- 产物引用。
+~~~text
+Result
+Evidence
+Artifacts
+Open Questions
+Status
+~~~
 
-不是子 Agent 的全部过程日志。
+而不是 Subagent 的全部历史。
 
-这正是 Context Isolation 的延伸。
+如果所有子 Agent 最后把完整 Context 都交回主 Agent，Isolation 的价值就没了。
 
 ## 地图坐标
 
-Subagent 本质是：
+Subagent 是**一个 Loop 调用另一个 Loop 完成子目标**。
 
-> 当前 Loop 把一个子目标交给另一个 Loop，再把结果作为 Observation 收回来。
-
-理解这一点后，Multi-Agent 就不再神秘。
+下一章的 Multi-Agent 会讨论：当这种关系不再是一次委派，而变成一个长期协作拓扑时，会多出哪些问题。
