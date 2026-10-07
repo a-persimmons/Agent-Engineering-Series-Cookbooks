@@ -6,6 +6,8 @@
 
 > 已经有一组 API、脚本和系统能力，应该怎样包装成模型容易理解、容易调用、容易恢复的 Tool？
 
+![Tool 是 Agent 与业务系统之间的语义适配层](/diagrams/agent/tool-boundary.svg)
+
 ## Tool 名称就是决策界面
 
 ~~~text
