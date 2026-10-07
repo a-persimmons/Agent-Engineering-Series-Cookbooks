@@ -6,6 +6,8 @@ Subagent 的重点不在“多一个 Agent”。
 
 > 主 Agent 能否把一个边界清楚的子问题交出去，然后只接回需要的结果？
 
+![Subagent 与多 Loop 协作拓扑](/diagrams/agent/subagent-topology.svg)
+
 ## 什么情况下值得拆出 Subagent
 
 ### Context 太独立
