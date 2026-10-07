@@ -8,6 +8,8 @@
 
 但如果曲线变红之后，没有人知道下一步该做什么，这套 Eval 还没有形成闭环。
 
+![Evaluation Improvement Loop](/diagrams/evaluation/improvement-loop.svg)
+
 ## 一个失败真正应该走完这条路
 
 ~~~text
