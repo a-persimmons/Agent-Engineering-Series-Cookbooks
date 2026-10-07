@@ -2,6 +2,8 @@
 
 Evaluation Engineering 可以压缩成一条闭环：
 
+![Evaluation Engineering 核心闭环](/diagrams/evaluation/core-map.svg)
+
 <div class="map-card">
 
 **Target**：我们到底想让系统变好什么？  
