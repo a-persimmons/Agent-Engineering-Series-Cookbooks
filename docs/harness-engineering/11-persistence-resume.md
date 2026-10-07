@@ -10,6 +10,9 @@ Resume 再问：
 
 > 重新启动以后，能不能安全地从这里继续？
 
+
+![Checkpoint、Persistence 与 Resume](/diagrams/harness/persistence-resume.svg)
+
 ## Persistence 不只有 Task State
 
 可能还需要保存：
