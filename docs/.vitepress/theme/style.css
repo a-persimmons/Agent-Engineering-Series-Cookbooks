@@ -19,3 +19,16 @@
   background: var(--vp-c-bg-soft);
 }
 .map-card strong { color: var(--vp-c-brand-1); }
+
+
+/* Concept diagrams */
+.vp-doc img[src*="/diagrams/"] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 28px auto 34px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(28, 47, 38, 0.06);
+  background: #f5f9f7;
+}
