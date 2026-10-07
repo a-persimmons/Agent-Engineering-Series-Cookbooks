@@ -1,10 +1,8 @@
 # 24｜下一站：Harness Engineering
 
-第三册到这里结束。
+到这里，Agent 已经不再是一堆零散名词。
 
-如果 Agent Engineering 已经形成地图，你现在看到 ReAct、Planning、Reflection、Multi-Agent，不会再把它们看成彼此独立的“高级玩法”。
-
-它们都在改造同一条 Loop：
+ReAct、Planning、Reflection、Subagent、Multi-Agent 都可以放回同一条 Loop：
 
 ~~~text
 Goal
@@ -24,30 +22,54 @@ Feedback
 Next Loop
 ~~~
 
-## 为什么还需要 Harness
+这条 Loop 解释了 Agent 怎样完成任务。
 
-一个 Agent “能跑起来”，离“能放进真实生产”还有很远。
+但它还没有回答另一个更现实的问题：
 
-例如：
+> **如果这套东西真的要运行几小时、几天，甚至直接碰生产环境，谁来管住它？**
 
-- Tool 能不能访问生产数据库？
-- 写文件有没有沙箱？
-- 一直循环怎么办？
-- 运行到一半进程挂了怎么办？
-- 工具执行了一半，状态怎么恢复？
-- 每一步花了多少钱？
-- 哪个版本的 Prompt 和 Tool 造成了事故？
-- 哪些动作必须人工审批？
+## 一个能跑的 Agent，还不是一个可靠系统
 
-这些问题不会让 Agent 更聪明。
+现在把 Mini Coding Agent 放到真实环境里，问题会立刻冒出来：
 
-它们让 Agent **可控、可恢复、可观察、可审计**。
+- 它能不能随便读写文件？
+- Shell 命令跑多久必须被终止？
+- 同一个 API 最多重试几次？
+- 运行到一半进程挂了，状态怎么恢复？
+- 一个任务最多花多少钱？
+- 哪些写操作必须等人批准？
+- 出事故以后，能不能还原它每一步做过什么？
 
-## 下一册的核心问题
+这些问题几乎都不会提升模型智力。
+
+但没有它们，Agent 越有行动能力，风险反而越大。
+
+## Harness 做的是什么
+
+可以先把下一册理解成：
+
+~~~text
+┌─────────────────────────┐
+│         Harness         │
+│                         │
+│   Goal → Context        │
+│      → Decision         │
+│      → Action           │
+│      → Observation      │
+│      → State            │
+│      → Feedback         │
+│      → Loop             │
+│                         │
+└─────────────────────────┘
+~~~
+
+Harness 包住整个 Loop，为它提供运行边界。
+
+## 下一册会进入什么
 
 **《Harness Engineering：让 Agent 可靠运行》**
 
-会把整条 Agent Loop 包进一个运行壳：
+会继续处理：
 
 - Permission；
 - Sandbox；
@@ -58,10 +80,12 @@ Next Loop
 - Persistence；
 - Observability；
 - Error Recovery；
-- Long-running Tasks。
+- Long-running execution。
 
-第三册学的是 Agent 怎样行动。
+第三册回答的是：
 
-第四册开始解决：
+> Agent 怎样行动？
 
-> **怎样让它安全、稳定、长期地行动。**
+第四册开始回答：
+
+> **怎样让这种行动长期可控。**
