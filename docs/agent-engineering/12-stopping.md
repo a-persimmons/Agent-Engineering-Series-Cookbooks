@@ -49,6 +49,8 @@ Hard Stop：
 - 超时；
 - 权限失败。
 
+这些属于 Agent 的停止语义，但生产系统里不应该只让模型自己判断“该停了”。真正的硬上限要由 Harness 强制执行。
+
 Soft Stop：
 
 - 模型判断任务完成；
@@ -56,6 +58,22 @@ Soft Stop：
 - 没有更多高价值动作。
 
 两者通常要同时存在。
+
+## Stop Reason 也应该进入 State / Trace
+
+Agent 停止时，最好留下明确原因：
+
+~~~text
+completed
+budget_exhausted
+timeout
+permission_denied
+human_cancelled
+blocked
+failed
+~~~
+
+否则“任务结束了”并不能告诉后续系统它是成功完成，还是被迫中止。
 
 ## 地图坐标
 
