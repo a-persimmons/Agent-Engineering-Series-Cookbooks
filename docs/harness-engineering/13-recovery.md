@@ -4,6 +4,8 @@ Retry 只适合“动作仍然正确，只是这次没执行好”。
 
 Recovery 处理更大的问题：
 
+![Recovery 故障状态机](/diagrams/harness/recovery-state.svg)
+
 > 失败发生后，下一种运行状态应该是什么？
 
 ## 常见恢复动作
