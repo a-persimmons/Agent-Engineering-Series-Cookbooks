@@ -28,13 +28,15 @@
 ## Recovery
 
 - 错误有没有分类？
-- Retry 是否有上限？
+- 外部副作用状态未知时，是否先 Reconcile？
+- Retry 是否有上限、backoff，必要时是否 fail-fast / 熔断？
 - 写操作是否幂等？
 - 是否需要补偿或 Rollback？
 
 ## Persistence
 
 - Checkpoint 保存什么？
+- 高风险 Action 是否记录 pending / committed / reconciled 状态？
 - 什么时候保存？
 - Resume 前如何 Reconcile？
 
