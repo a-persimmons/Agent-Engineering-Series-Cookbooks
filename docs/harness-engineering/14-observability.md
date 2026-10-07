@@ -6,6 +6,9 @@ Observability 首先服务于调试和运营。
 
 > 这一次任务为什么走成了现在这样？
 
+
+![Observability 与 Audit 的职责差异](/diagrams/harness/observability-audit.svg)
+
 ## 一条有用的 Agent Trace
 
 通常需要：
