@@ -8,6 +8,9 @@
 
 应该让执行层真的拒绝。
 
+
+![Permission、Isolation、Validation 三层边界](/diagrams/harness/boundary-layers.svg)
+
 ## 权限可以分层
 
 ### Read
