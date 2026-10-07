@@ -39,6 +39,7 @@
 - 图中文字必须与正文术语完全一致，避免视觉层再发明一套说法。
 - 图先给结构，正文解释关系；正文不逐字复述图。
 - 第一册核心图：六问总地图、设计/调试双向图、需求→任务规格、Few-shot 边界图、Reasoning 中间结构、Debug 诊断树、Prompt 演化、Runtime Context 与跨册过渡图。
+- 第二册核心图：七问总地图、Window / Runtime Context / Memory 区分、History / State / Memory 分工、Lifecycle、Long-running 三层结构、Context Debugging、超长日志 Pipeline 与 Agent 过渡图。
 
 ## 第三轮：文学 / 编辑精修
 
