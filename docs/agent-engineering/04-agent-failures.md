@@ -4,52 +4,82 @@ Agent 的失败不能只看最终答案。
 
 因为错误可能发生在轨迹中的任何一步。
 
-## 一套起始分类
+两个 Agent 都给出了错误结论：
+
+- 一个第一步就调用错工具；
+- 一个前八步都正确，最后 State 被旧值覆盖。
+
+表面一样，修法完全不同。
+
+## 用 Loop 给失败找位置
 
 ### Goal Failure
 
-系统没有持续围绕真实目标推进。
+任务方向漂移，或者 Completion Criteria 一开始就不清楚。
 
 ### Context Failure
 
-这一轮看到的信息不够、太多、冲突或过期。
+这一轮看到的信息缺失、噪声过多、冲突或过期。
 
 ### Decision Failure
 
-信息正确，但下一步判断错误。
+Context 足够，但模型选了错误的下一步。
 
 ### Action Failure
 
-工具选错、参数错、权限错，或者执行失败。
+工具、参数、权限或执行本身失败。
 
 ### Observation Failure
 
-工具返回了结果，但系统误读、丢失或错误摘要。
+环境已经返回关键信息，但系统丢失、误读或错误压缩。
 
 ### State Failure
 
-已完成工作、关键事实或任务进度没有正确更新。
+进度、事实或当前计划没有正确更新。
 
 ### Feedback Failure
 
-执行结果已经说明方向错了，Agent 却没有修正。
+结果已经说明方向不对，Agent 却没有调整。
 
 ### Loop Failure
 
-重复、死循环、过早停止或无限扩张。
+死循环、重复动作、过早结束或没有预算边界。
 
-## 为什么轨迹比最终答案重要
+## Debug 时不要从 Prompt 开始
 
-两个 Agent 最终都给错答案。
+假设 Agent 连续三次调用同一个失败工具。
 
-一个第一步就选错工具；另一个前五步都正确，最后状态覆盖错误。
+先问：
 
-表面相同，修法完全不同。
+1. Observation 有没有包含失败原因？
+2. State 有没有记录“这个方案已失败”？
+3. Feedback 有没有告诉 Decision 不要原样重复？
+4. Loop 是否允许无限重复？
+5. Tool 描述是否让模型误以为这是唯一选择？
 
-因此 Agent Debug 的基本单位不再只是“输入—输出”，而是 **Trajectory**。
+最后才需要判断 Prompt 是否有问题。
+
+## Trajectory 是新的调试单位
+
+单次 LLM 常看：
+
+~~~text
+Input → Output
+~~~
+
+Agent 要看：
+
+~~~text
+Context₁ → Decision₁ → Action₁ → Observation₁
+                                  ↓
+Context₂ → Decision₂ → Action₂ → Observation₂
+...
+~~~
+
+只有看到轨迹，才能知道错误在哪里第一次出现。
 
 ## 地图坐标
 
-这一章是后面 Debug 的索引。
+Failure Taxonomy 是最小 Loop 的反向索引。
 
-以后看到失败，先找它发生在 Loop 的哪个节点。
+设计时顺着 Loop；失败时从异常节点往前追。

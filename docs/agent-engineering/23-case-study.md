@@ -1,32 +1,40 @@
 # 23｜完整项目：从 80 行 Loop 长成一个 Mini Coding Agent
 
-我们用一个项目把整册串起来。
-
 目标：
 
 > 给 Agent 一个代码仓库和任务，让它能查文件、修改代码、运行测试，并在验证后结束。
 
-## V0：模型给建议
+我们不一次性搭完整系统，而是让真实失败推动它生长。
+
+## V0：模型只给建议
 
 ~~~text
 User → Model → “你应该修改 parser.py”
 ~~~
 
-它会分析，但不会真正完成任务。
+分析可能是对的，但世界没有变化。
 
-## V1：加入 Action
+缺失节点：**Action**。
 
-提供三个工具：
+## V1：让它真正行动
+
+增加：
 
 - list_files；
 - read_file；
 - write_file。
 
-模型终于能改代码。
+模型终于能改文件。
 
-**地图：Action。**
+~~~text
+Decision → Action
+~~~
 
-## V2：加入 Loop
+很快出现新问题：它读一次文件、改一次，就结束了。
+
+缺失节点：**Loop**。
+
+## V2：把 Tool Result 放回下一轮
 
 ~~~text
 Decision
@@ -38,21 +46,39 @@ Observation
 Next Decision
 ~~~
 
-模型可以先读文件，再决定改哪里。
+现在它可以：
 
-**地图：Loop。**
+> 找文件 → 读文件 → 决定修改 → 写文件。
 
-## V3：加入测试工具
+但“写完”不等于“修好”。
+
+缺失节点：**Feedback**。
+
+## V3：让环境验证
 
 增加 run_tests。
 
-修改后不再让模型自己判断“应该好了”，而是用测试提供环境 Feedback。
+修改后必须运行相关测试。
 
-**地图：Observation + Feedback。**
+~~~text
+Action: write_file
+↓
+Observation: file changed
+↓
+Action: run_tests
+↓
+Feedback: 2 tests failed
+~~~
 
-## V4：加入显式 State
+测试让 Agent 第一次知道自己没有完成任务。
 
-保存：
+但几轮以后，历史越来越长，Agent 开始忘记哪些文件改过、哪些失败已经处理。
+
+缺失节点：**State**。
+
+## V4：把进度拿出聊天记录
+
+显式保存：
 
 ~~~text
 Goal
@@ -60,65 +86,93 @@ Current Plan
 Files Changed
 Tests Run
 Known Failures
+Confirmed Facts
 Next Step
 ~~~
 
-Context 不再完全依赖历史消息。
+每轮 Context 从 State 动态构建。
 
-**地图：State。**
+Agent 不再依靠“翻聊天记录”找进度。
 
 ## V5：加入 Planning
 
-复杂任务先生成简短计划。
+复杂任务先生成一个短计划。
 
-每完成一步更新状态；如果测试出现新问题，允许 Replan。
+~~~text
+Plan
+↓
+Execute Step
+↓
+Observe
+↓
+Update State
+↓
+Keep / Revise Plan
+~~~
 
-**地图：Decision + State。**
+ReAct 负责局部动作，Plan 负责整体方向。
 
-## V6：加入 Stop Conditions
+但新的问题出现：它有时已经完成，还会继续优化。
 
-结束必须满足：
+缺失节点：**Stop**。
 
-- 目标代码已修改；
-- 相关测试通过；
-- 没有未解释失败；
-- 变更摘要已生成。
+## V6：定义完成与硬边界
 
-同时设：
+完成条件：
+
+1. 目标代码已修改；
+2. 相关测试通过；
+3. 没有未解释失败；
+4. 生成变更摘要。
+
+同时加入：
 
 - max steps；
 - time budget；
 - tool budget。
 
-**地图：Loop Exit。**
+Loop 第一次有了真正出口。
 
-## V7：加入 Error Recovery
+## V7：错误不再统一“重试”
 
-工具错误分类：
+工具错误被分类：
 
-- 参数错误 → 修参数；
-- 测试失败 → 读失败信息；
-- 文件冲突 → 重新读取；
-- 权限错误 → 停止并报告。
+- 参数错误 → Repair；
+- 测试失败 → Read Feedback；
+- 文件冲突 → Re-read；
+- 权限错误 → Stop / Ask Human；
+- 临时失败 → Limited Retry。
 
-不再统一“重试一次”。
+这里强化的是：
 
-## V8：加入 Subagent
+**Observation → Feedback → Decision**。
 
-主 Agent 遇到大仓库时，可以把“定位相关代码”交给一个只读 Search Agent。
+## V8：把搜索子任务隔离出去
 
-Search Agent 返回：
+大仓库里，定位文件会产生大量 Context。
+
+增加只读 Search Subagent：
 
 ~~~text
+Main Agent
+   ↓ task
+Search Agent
+   ↓
 Relevant Files
 Relevant Symbols
 Evidence
 Open Questions
+   ↓
+Main Agent
 ~~~
 
-主 Agent 不接收它的完整历史。
+主 Agent 不接收搜索过程的全部历史。
 
-## 最小架构
+这里强化的是：
+
+**Context Isolation + Subagent Loop**。
+
+## 最终地图
 
 ~~~text
                 Goal
@@ -145,10 +199,12 @@ Open Questions
         └────→ Loop ──────┘
 ~~~
 
-到这里，它已经很像一个简化版 Coding Agent。
+这时它已经像一个简化版 Coding Agent。
 
-但还缺一层东西：
+接下来真正棘手的，不再是“它会不会调用工具”。
 
-> 权限、沙箱、重试上限、预算、Checkpoint、恢复、审计、可观测性，应该怎样成为可靠的运行环境？
+而是：
 
-这正是下一册的主题。
+> 权限、沙箱、重试上限、预算、Checkpoint、恢复、审计和长任务运行，怎样变成一个可靠的执行环境？
+
+这就是 Harness Engineering。

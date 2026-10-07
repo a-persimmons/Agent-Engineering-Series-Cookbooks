@@ -8,18 +8,77 @@
 
 **Goal → Context → Decision → Action → Observation → State → Feedback → Next Loop**
 
-后面遇到 ReAct、Planning、Reflection、Workflow、Subagent、Multi-Agent，都先问：
+ReAct、Planning、Reflection、Workflow、Subagent、Multi-Agent，都会从这条 Loop 上长出来。
 
-> 它改变了这条循环里的哪一部分？
+## 读完后应该形成三种反射
 
-## 读完以后，你应该能做到什么
+### 架构反射
 
-1. 从零手写一个最小 Agent Loop。
-2. 分清 Chatbot、Workflow 与 Agent。
-3. 知道 Tool、Observation、State、Feedback 各自负责什么。
-4. 能解释 ReAct、Planning、Reflection 为什么出现，而不是只会调用框架 API。
-5. 能判断一个任务到底需要 Agent，还是固定 Workflow 更合适。
-6. 能对 Agent 的轨迹进行 Debug、Eval 和失败分类。
-7. 能看懂 LangGraph、Agents SDK 等框架到底替你封装了什么。
+看到一个任务，先判断：
 
-第三册的目标不是“会更多 Agent 框架”，而是让你能自己画出运行时。
+> 下一步是否必须根据中间结果动态决定？
+
+如果不是，固定 Workflow 可能比 Agent 更合适。
+
+### 运行时反射
+
+看到 Agent 行为，脑子里会自动拆成：
+
+> 它当时看见什么 → 做了什么决定 → 执行了什么 → 环境返回什么 → 状态怎么变 → 为什么继续或停止。
+
+不再只看最终答案。
+
+### 诊断反射
+
+看到失败，不会只说“模型不够聪明”。
+
+而会定位：
+
+- Goal 漂了；
+- Context 错了；
+- Decision 错了；
+- Tool 执行错了；
+- Observation 丢信息；
+- State 没更新；
+- Feedback 没进入下一轮；
+- Loop 没有停止边界。
+
+## 怎么读
+
+最好边读边写一个几十行的 Mini Agent。
+
+不要一开始用框架。
+
+从：
+
+~~~text
+Model
+↓
+Tool
+↓
+Result
+~~~
+
+逐步长成：
+
+~~~text
+Goal
+↓
+State
+↓
+Context
+↓
+Decision
+↓
+Action
+↓
+Observation
+↓
+Feedback
+↓
+Loop
+~~~
+
+到第 23 章，我们会把它推进成一个 Mini Coding Agent。
+
+那时再去看 LangGraph 或 Agents SDK，你看到的就不再是 API，而是它们替你封装的运行时原语。
