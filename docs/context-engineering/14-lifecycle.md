@@ -2,6 +2,8 @@
 
 Context 最大的工程变化之一，是从“静态文本”变成有生命周期的信息。
 
+![Context Lifecycle](/diagrams/context/lifecycle.svg)
+
 一条信息至少可能经历：
 
 ~~~
