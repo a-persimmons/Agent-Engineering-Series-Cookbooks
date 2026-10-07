@@ -9,6 +9,8 @@
 ## Cases
 
 - Normal / Edge / Adversarial 都覆盖了吗？
+- Development / Regression / Holdout 是否需要分开？
+- 是否存在 Eval Case 被直接拿去调 Prompt 或做示例造成泄漏？
 - 历史真实失败进测试集了吗？
 - 高风险 Slice 是否单独覆盖？
 - Dataset 是否版本化？
@@ -33,6 +35,8 @@
 ## Metrics
 
 - 是否只看平均值？
+- 关键 Case 是否需要 repeated trials？
+- 版本差异是否可能只是随机波动？
 - 高风险 Slice 是否单独看？
 - 指标是否真的对应 Target？
 
@@ -44,6 +48,7 @@
 ## Regression
 
 - Baseline 明确吗？
+- Candidate 与 Baseline 是否使用相同 trial policy？
 - Candidate 是否跑同一 Dataset？
 - 修复有没有造成其他 Slice 退化？
 
