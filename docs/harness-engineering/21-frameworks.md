@@ -50,6 +50,8 @@
 
 当你知道 Permission、Persistence、Recovery 各自是什么，换框架时只是找对应能力。
 
+真正值得比较的也不是 API 是否“顺手”，而是它提供哪些 **runtime guarantees**：暂停/恢复是否安全、tool approval 是否可持久化、trace 是否足够还原、state ownership 是否清楚、故障后会不会静默重放副作用。
+
 ## 地图坐标
 
 Agent Framework 是 Harness 能力的实现载体之一。
