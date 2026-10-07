@@ -1,77 +1,84 @@
-# 22｜Improvement Loop：真正的 Eval 终点不是 Dashboard
+# 22｜真正的 Eval 终点不是 Dashboard
 
-如果 Eval 最后只剩一张指标看板，它还没有完成闭环。
+一个项目做完 Evaluation，最容易留下来的东西是一张 Dashboard。
 
-真正有价值的链路是：
+成功率、成本、延迟、Judge 分数，全都画成漂亮曲线。
+
+这些当然有用。
+
+但如果曲线变红之后，没有人知道下一步该做什么，这套 Eval 还没有形成闭环。
+
+## 一个失败真正应该走完这条路
 
 ~~~text
 Failure
 ↓
 Classify
 ↓
-Find Root Layer
+Locate Root Layer
 ↓
-Change
+Engineering Change
 ↓
 Regression
 ↓
 Release
 ↓
-Observe Production
+Production
 ↓
-New Failure
+New Feedback
 ~~~
 
-## 不同失败应该流向不同工程层
+每一步都不能省。
 
-### Goal / Instruction
+## 不同 Failure 要回到不同地方
 
-改 Prompt。
+模型误解任务，可能回 Prompt。
 
-### Missing / Noisy Context
+关键证据没进 Context，应该回 Context Pipeline。
 
-改 Context Pipeline。
+Tool 选错或 Loop 重复，应该回 Agent。
 
-### Tool / Decision
+Timeout 导致重复付款，应该回 Harness。
 
-改 Agent Design。
+测试根本没覆盖这个问题，Evaluation 自己也需要修。
 
-### Permission / Retry / Resume
+这也是为什么第五册放在整个系列最后。
 
-改 Harness。
+它不是站在外面给前四册打分。
 
-### Judge / Dataset Blind Spot
+它负责把真实失败重新送回正确的工程层。
 
-改 Evaluation 本身。
+## 一次修复如果没有留下 Regression，知识仍然只在人脑里
 
-这就是为什么整个系列最后要落到 Eval。
+某次事故发生：
 
-它负责把失败路由回正确层。
+> Agent 在 Tool Timeout 后重复执行写操作。
 
-## 每次修复都问三个问题
+工程师修了代码。
 
-1. 修的是哪类 Failure？
-2. 新 Case 加进回归了吗？
-3. 这个修复有没有副作用？
+如果到这里就结束，这个知识仍然依赖“大家记得这件事”。
 
-如果只修代码、不留测试，同一种问题迟早回来。
+更完整的做法是：
 
-## 自动化并不是最终目标
+1. 保存事故 Trace；
+2. 建立 Failure Type；
+3. 写一个可以稳定复现的 Case；
+4. 修复 Harness；
+5. 把 Case 加进 Regression；
+6. 以后每个版本自动重跑。
 
-有些新 Failure 需要人工分析。
+这时经验才真正进入系统。
 
-重要的是流程稳定：
+## Improvement Loop 的本质
 
-> 真实失败不会只停留在聊天记录、工单或某个人脑子里。
+不是让系统“自动自我进化”。
 
-它会成为：
+而是让：
 
-- Case；
-- Rule；
-- Metric；
-- Guardrail；
-- Harness Mechanism。
+> **失败不再只是一次事故，而能稳定地转化成数据、规则、测试和机制。**
 
-## 地图坐标
+这已经足够强大。
 
-Improvement Loop 是整个 Evaluation Engineering 的终点，也是整个系列的闭环。
+因为一个团队长期真正积累的，不应该只是越来越长的 Prompt 和越来越复杂的代码。
+
+还应该有一套越来越难被旧问题击穿的验证系统。

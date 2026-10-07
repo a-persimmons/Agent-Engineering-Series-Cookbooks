@@ -1,53 +1,83 @@
 # 01｜Eval 不是给答案打一个分
 
-很多 Eval 从一个问题开始：
+一个模型回答完，你问另一个模型：
 
-> 这个回答 1 到 10 分是多少？
+> 这段回答 1 到 10 分是多少？
 
-这看起来量化了。
+它说：
 
-但“8 分”通常没有告诉你：
+> 8 分。
 
-- 为什么不是 6；
-- 哪条标准失败；
-- 应该改 Prompt、Context、Agent 还是 Tool；
-- 下一个版本有没有真正修复。
+看起来，Evaluation 已经发生了。
 
-一个分数如果不能帮助决策，价值很有限。
+其实我们只得到一个数字。
 
-## Eval 的目标是可比较和可诊断
+这个数字没有告诉你为什么不是 6 分，也没有告诉你哪一部分失败，更没有告诉你下一版该改 Prompt、Context、Agent 还是 Harness。
 
-一个有用的 Evaluation 至少应该支持两件事：
+“8 分”很像结论，却很难指导工程动作。
 
-### Compare
+## 真正有用的 Eval，至少要回答两个问题
 
-V2 相比 V1 是否更好？
+第一个：
 
-### Diagnose
+> **这个版本比上一个版本更好吗？**
 
-如果不好，主要坏在哪里？
+这是 Compare。
 
-所以比“总分”更有价值的通常是：
+第二个：
+
+> **如果不好，坏在哪里？**
+
+这是 Diagnose。
+
+所以，与其只得到：
 
 ~~~text
-Correctness: pass
-Evidence: fail
-Format: pass
-Uncertainty: fail
+score = 8
 ~~~
 
-你马上知道该修哪一层。
+更有价值的是：
 
-## Evaluation 不是最后才做
+~~~text
+correctness: pass
+evidence: fail
+uncertainty: fail
+format: pass
+~~~
 
-如果等系统开发完再考虑 Eval，很容易发现：
+一眼就能看出：问题不在格式，而在证据和不确定性处理。
 
-> 连“什么算好”都没有共识。
+## Evaluation 不是项目最后的一场考试
 
-Target 和 Success Criteria 应该尽早进入设计。
+很多团队先把系统做完，准备上线时才开始想：
 
-## 地图坐标
+> 我们要不要做个 Eval？
 
-Evaluation Engineering 从 **Target** 开始，不从 Metric 开始。
+这时往往会遇到一个尴尬问题：
 
-先定义要守住的行为，再讨论怎么测。
+> 到底什么算“好”？
+
+如果这个问题直到最后才出现，前面的“优化”其实一直缺少共同方向。
+
+一个成熟项目应该更早定义：
+
+- 哪些行为必须正确；
+- 哪些错误不能接受；
+- 哪些指标只是参考；
+- 哪些边界一旦越过就不能上线。
+
+## 这一册从哪里开始
+
+不是 Judge。
+
+不是 Dashboard。
+
+也不是某个 Eval Framework。
+
+从一个更基础的问题开始：
+
+> **我们到底想让系统变好什么？**
+
+这就是 Target。
+
+后面所有 Case、Rubric、Metric 和 Regression，都从这里长出来。

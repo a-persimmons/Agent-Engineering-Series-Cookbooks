@@ -1,80 +1,85 @@
-# 12｜LLM-as-Judge：先校准测量工具，再相信分数
+# 12｜LLM-as-Judge：别把另一个模型当成裁判席上的真理
 
-LLM Judge 很方便。
+LLM Judge 很诱人。
 
-给它结果和 Rubric，就能自动评大量案例。
+人工一天只能看几十条，模型几分钟就能评几千条。
 
-问题也恰恰在这里：因为自动化太容易，人很容易跳过“这个 Judge 到底准不准”。
+于是很容易发生一件事：
 
-## Judge 不是 Oracle
+> 原来人工的“感觉”，现在变成了另一个模型的“感觉”，只是速度更快。
 
-它会受：
+自动化并不会自动带来可靠性。
 
-- 文风；
-- 长度；
-- Prompt；
-- 自己的模型偏好；
-- 参考答案质量；
-- Rubric 含糊程度；
+## Judge 也是一个会犯错的模型
 
-影响。
+它会受很多东西影响：
 
-所以 Judge 本身也要经过 Evaluation。
+- 输出更长，看起来更充分；
+- 文风更流畅，看起来更专业；
+- 被评答案和 Judge 使用同一模型家族；
+- Rubric 写得含糊；
+- Reference 本身就不准确；
+- A/B 顺序不同。
 
-## 先要求证据，再要求判断
+所以“Judge 给了 4.7 分”并不天然比人工判断更客观。
 
-不要只返回：
+## 让 Judge 留下证据
+
+不要只让它返回：
 
 ~~~text
 score = 4
 ~~~
 
-更有用：
+让它按 Rubric 判断：
 
 ~~~text
-criterion = evidence_support
-result = fail
-evidence = "结论 X 没有输入来源支持"
+criterion: evidence_support
+result: fail
+evidence:
+  "回答声称服务在 14:02 重启，但输入中没有这个事实。"
 ~~~
 
-这样人工抽查时可以看到它依据什么。
+这样至少能检查：
 
-## 用人工校准集测 Judge
+> 它为什么这么判？
 
-准备一批已经人工确认的 Case。
+如果理由站不住，分数也没有意义。
 
-检查：
+## 给 Judge 做一次自己的 Eval
 
-- agreement；
-- precision / recall；
-- 哪类 Rubric 最容易误判；
-- 哪些 Case 置信最低。
+准备一小组人工已经确认的 Case。
 
-Judge 不需要完美。
+然后看 Judge：
 
-你需要知道它的误差边界。
+- 哪些标准与人工一致；
+- 哪些经常误判；
+- 对哪个 Slice 最不稳定；
+- Pairwise 是否有位置偏好；
+- 低置信 Case 集中在哪里。
 
-## Judge 配置也要版本化
+从那以后，你不再说：
 
-更换：
+> Judge 准不准？
 
-- Judge Model；
-- Judge Prompt；
-- Rubric；
-- Reference；
+而是能说：
 
-都可能改变分数。
+> 它在这几类标准上可靠，在另外两类上需要人工抽查。
 
-因此历史趋势必须同时记录 Evaluation Stack 的版本。
+这才像一个测量工具。
 
-## 能程序判断的部分不要交给 Judge
+## 能写成代码的，不要交给 Judge
 
-Schema、Tool 名称、权限、数值边界等，优先确定性检查。
+JSON 是否合法、Tool 名称是否正确、路径是否越权、测试是否通过——这些问题程序可以直接判断。
 
-Judge 更适合补充语义判断。
+让 LLM 去判断，只会增加成本和不确定性。
+
+Judge 最适合补那些真正需要语义理解的部分。
 
 ## 地图坐标
 
-LLM-as-Judge 是 **Rubric 的执行器之一**。
+LLM-as-Judge 只是 Rubric 的一种执行方式。
 
-它不是 Evaluation Engineering 的中心；它本身也是需要被校准的测量仪器。
+一个成熟的 Eval System，不会因为用了 Judge 就自动成立。
+
+它仍然要回到 Target、Cases、Rubric、Signals 和 Calibration。
