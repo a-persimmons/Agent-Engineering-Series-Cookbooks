@@ -4,6 +4,8 @@ ReAct 经常被介绍成一种 Prompt Technique。
 
 如果前面的 Loop 已经在脑子里，它其实很好理解。
 
+![ReAct 与 Planning 在 Agent Loop 中的分工](/diagrams/agent/react-planning.svg)
+
 ~~~text
 Reason
 ↓
