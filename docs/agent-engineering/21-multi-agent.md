@@ -4,6 +4,8 @@ Subagent 可以是一锤子买卖：交任务，拿结果，结束。
 
 Multi-Agent 更关心多个 Agent 长期怎样分工、交换状态和决定控制权。
 
+![Multi-Agent 的关键不是数量，而是 Loop 之间的协调](/diagrams/agent/subagent-topology.svg)
+
 ## 常见协作拓扑
 
 ### Supervisor / Worker
