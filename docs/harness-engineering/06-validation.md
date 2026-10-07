@@ -4,6 +4,9 @@
 
 中间应该有 Validation。
 
+
+![Permission、Isolation、Validation 三层边界](/diagrams/harness/boundary-layers.svg)
+
 ## 参数验证
 
 例如：
