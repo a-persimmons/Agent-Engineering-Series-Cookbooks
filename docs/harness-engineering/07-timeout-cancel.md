@@ -4,6 +4,9 @@
 
 但如果 Tool 永远不返回呢？
 
+
+![Timeout、Retry 与 Reconcile](/diagrams/harness/retry-reconcile.svg)
+
 ## 每一层都可能需要 Timeout
 
 - 单次 HTTP；
