@@ -2,6 +2,8 @@
 
 第二册到这里结束。
 
+![从 Context Engineering 进入 Agent Loop](/diagrams/context/transition-agent.svg)
+
 现在再看“上下文”这个词，它应该已经不再等同于一段很长的输入。
 
 更准确的画面是：模型每做一次决定，系统都在为它临时搭建一个工作台。
