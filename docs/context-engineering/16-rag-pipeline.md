@@ -4,6 +4,8 @@
 
 更完整的 RAG 应该看成一条 Context Pipeline：
 
+![RAG 是一条 Context Pipeline](/diagrams/context/rag-pipeline.svg)
+
 ~~~
 Question
   ↓
