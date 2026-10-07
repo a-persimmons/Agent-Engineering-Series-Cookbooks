@@ -1,56 +1,56 @@
 # 23｜完整项目：把 Mini Coding Agent 硬化成可长期运行的 Harness
 
-第三册最后，我们有了一个 Mini Coding Agent：
+第三册最后，我们有了一个能工作的 Mini Coding Agent。
+
+它会：
+
+- 找文件；
+- 改代码；
+- 跑测试；
+- 更新 State；
+- 根据 Feedback 继续；
+- 满足条件后停止。
+
+现在不给它增加任何“智力”。
+
+只处理一个问题：
+
+> 如果它真的在机器上连续运行二十分钟，哪里最可能失控？
+
+## V0：先限制能碰什么
+
+原来 write_file 接受任意路径。
+
+现在：
 
 ~~~text
-Goal
-↓
-Context
-↓
-Decision
-↓
-Action
-↓
-Observation
-↓
-State
-↓
-Feedback
-↓
-Loop
+readable_paths = /workspace/repo/**
+writable_paths = /workspace/repo/**
+default = deny
 ~~~
 
-现在开始把它放进真实环境。
+越界直接拒绝。
 
-## V0：能改代码，但什么都能改
+**地图：Permission。**
 
-第一条 Harness Rule：
+## V1：把执行放进 Sandbox
 
-~~~text
-writable_paths = ["/workspace/repo/**"]
-readable_paths = ["/workspace/repo/**"]
-~~~
-
-访问其他路径直接拒绝。
-
-**增加：Permission + Isolation。**
-
-## V1：Shell 进入 Sandbox
-
-Agent 可以运行测试，但：
+Shell 只能在隔离环境里：
 
 - 固定 cwd；
-- 限制网络；
-- 限 CPU / Memory；
-- 不暴露宿主机 Secret。
+- CPU / Memory 限制；
+- 网络默认关闭；
+- 不注入宿主机 Secret。
 
-**增加：Sandbox。**
+即使命令错了，爆炸半径也被限制。
 
-## V2：Tool Call 必须 Validation
+**地图：Isolation。**
+
+## V2：Action 前后都 Validation
 
 write_file：
 
-- path normalize；
+- normalize path；
 - scope check；
 - size limit。
 
@@ -58,11 +58,17 @@ shell：
 
 - command policy；
 - timeout；
-- output size limit。
+- output cap。
 
-**增加：Validation。**
+Tool Result：
 
-## V3：每一步有预算
+- Schema；
+- exit status；
+- truncation marker。
+
+**地图：Validation。**
+
+## V3：Loop 有硬边界
 
 ~~~text
 max_steps = 30
@@ -70,33 +76,36 @@ max_tool_calls = 50
 max_runtime = 20m
 ~~~
 
-接近预算时，Agent 进入收敛模式。
+Budget 接近上限后，不再开新探索分支。
 
-**增加：Limits。**
+**地图：Limits。**
 
-## V4：错误分类恢复
+## V4：失败按语义分流
 
 ~~~text
-timeout → inspect state
+transient → retry
 invalid args → repair
 test failure → feed back
-permission → stop / approval
-transient → bounded retry
+permission → approval / stop
+side effect unknown → reconcile
+plan invalid → replan
 ~~~
 
-**增加：Recovery。**
+不再把所有异常都叫“重试”。
 
-## V5：写操作幂等
+**地图：Recovery。**
 
-关键 Action 记录 operation id。
+## V5：关键副作用可安全重放
 
-恢复任务前先查：
+每个写操作带 operation id。
 
-> 上一个 Tool 是否已经成功提交？
+如果进程在 Tool 成功后、State 更新前崩溃，Resume 先确认：
 
-**增加：Idempotency。**
+> 这个 operation 是否已经完成？
 
-## V6：每个 Step Checkpoint
+**地图：Recovery + Persistence。**
+
+## V6：每个可信边界 Checkpoint
 
 保存：
 
@@ -104,29 +113,35 @@ transient → bounded retry
 - Plan；
 - State；
 - Files Changed；
-- Tests；
+- Test Status；
 - Budget；
-- Last Tool。
+- Last Operation。
 
-进程被杀后可以 Resume。
+进程被杀以后可以从最近可信状态恢复。
 
-**增加：Persistence。**
+**地图：Persistence。**
 
-## V7：高风险动作进入 Approval
+## V7：高风险动作暂停等待
 
-例如：
+修改 CI、触发部署等 Action：
 
-- 修改 CI；
-- 发布；
-- 外部网络写操作。
+~~~text
+Checkpoint
+↓
+Approval Request
+↓
+Pause
+↓
+Human Decision
+↓
+Resume
+~~~
 
-先 Checkpoint，再 Pause。
-
-**增加：Permission + Human Approval。**
+审批结果会写回 Permission State。
 
 ## V8：完整 Trace
 
-每个 Tool Call 记录：
+每一步记录：
 
 ~~~text
 task_id
@@ -138,41 +153,52 @@ permission
 duration
 result
 state_diff
+retry
 cost
 ~~~
 
-**增加：Observability。**
+事故发生后可以按 Task 还原。
 
-## V9：把真实事故变成 Harness Eval
+**地图：Observability。**
 
-测试：
+## V9：故意把系统弄坏
 
-- 越权路径；
-- 无限 Loop；
-- Tool 超时；
-- 进程中断；
-- 重复写操作；
+自动测试：
+
+- workspace 越权；
+- Shell 无限等待；
+- API 429；
+- write 后崩溃；
+- Resume 重放；
 - 审批拒绝；
-- Context Compaction 后 Resume。
+- Budget 耗尽；
+- Trace 缺字段。
 
-**增加：Evaluation。**
+每修一个真实 Harness Failure，就把它永久留在回归集。
+
+**地图：Evaluation。**
 
 ## 最后的结构
 
 ~~~text
-┌───────────────────────────────┐
-│            Harness            │
-│ Permission | Sandbox          │
-│ Validation | Limits           │
-│ Recovery   | Persistence      │
-│ Observability | Evaluation    │
-│                               │
-│        ┌─────────────┐        │
-│        │ Agent Loop  │        │
-│        └─────────────┘        │
-└───────────────────────────────┘
+┌────────────────────────────────┐
+│             Harness            │
+│                                │
+│ Permission   Isolation         │
+│ Validation   Limits            │
+│ Recovery     Persistence       │
+│ Observability Evaluation       │
+│                                │
+│       ┌────────────────┐       │
+│       │   Agent Loop   │       │
+│       └────────────────┘       │
+└────────────────────────────────┘
 ~~~
 
-Agent 没有因此变得更“聪明”。
+这个项目最值得记住的，不是最后有哪些模块。
 
-但它开始像一套可以被信任、被运维、被恢复的软件系统。
+而是它的生长顺序：
+
+> **每出现一种可重复的失败，就尽量把它从“提醒 Agent”升级成“系统机制”。**
+
+这就是 Harness Engineering。
