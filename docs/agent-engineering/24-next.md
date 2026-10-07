@@ -2,6 +2,8 @@
 
 到这里，Agent 已经不再是一堆零散名词。
 
+![从 Agent Engineering 进入 Harness Engineering](/diagrams/agent/to-harness.svg)
+
 ReAct、Planning、Reflection、Subagent、Multi-Agent 都可以放回同一条 Loop：
 
 ~~~text
