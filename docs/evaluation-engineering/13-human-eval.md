@@ -6,6 +6,9 @@
 
 更适合把人放在自动化难以稳定判断的地方。
 
+
+![Deterministic、LLM Judge 与 Human Eval 的分工](/diagrams/evaluation/grader-stack.svg)
+
 ## 人更适合什么
 
 ### 主观偏好
