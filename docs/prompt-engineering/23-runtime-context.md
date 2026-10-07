@@ -6,6 +6,8 @@
 
 在现代 AI 系统里，更准确的对象是 **Runtime Context**。
 
+![Runtime Context 的组成与装配](/diagrams/prompt/runtime-context.svg)
+
 ## 一次调用真正看到的东西
 
 可以粗略写成：
