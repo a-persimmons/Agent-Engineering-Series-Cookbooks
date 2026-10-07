@@ -2,6 +2,8 @@
 
 把第三册的 Agent Loop 放在中间：
 
+![Harness 包住 Agent Loop](/diagrams/harness/core-map.svg)
+
 ~~~text
           ┌──────────────────────────┐
           │          Harness         │
