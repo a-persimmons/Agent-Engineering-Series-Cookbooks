@@ -6,6 +6,9 @@ Agent 能执行代码、Shell 或浏览器操作后，Isolation 就变得非常�
 
 这就是 Sandbox 的意义。
 
+
+![Permission、Isolation、Validation 三层边界](/diagrams/harness/boundary-layers.svg)
+
 ## Sandbox 隔离什么
 
 可能包括：
