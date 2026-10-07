@@ -47,9 +47,12 @@
 ## Loop
 
 - Stop Condition 是什么？
+- Stop Reason 是否结构化记录？
 - 有最大步数、时间和预算吗？
 - 是否可能重复同一动作？
-- 中断后能否恢复？
+- 发生失败时，Agent 是 Retry、Repair、Replan、Ask Human 还是 Stop？
+- 涉及副作用未知时，是否先对账而不是直接重试？
+- 中断后能否恢复？（真正的可靠恢复由 Harness 负责）
 
 ## Eval
 
