@@ -1,8 +1,20 @@
 # 02｜Harness 是 Agent 的 Control Plane
 
-可以把 Agent 系统粗略分成两层。
+一个 Agent 系统里，有两类问题。
 
-## Intelligence / Decision Plane
+第一类：
+
+> 下一步应该做什么？
+
+第二类：
+
+> 这一步允许怎么做、最多做到哪里、失败以后怎么办？
+
+前者更接近 Agent 的智能部分。
+
+后者就是 Harness 的工作。
+
+## Decision Plane
 
 负责：
 
@@ -11,7 +23,7 @@
 - 规划；
 - 根据反馈调整。
 
-主要由模型和 Agent Loop 承担。
+这里需要模型处理模糊和开放的问题。
 
 ## Control Plane
 
@@ -27,40 +39,50 @@
 - Trace；
 - 恢复。
 
-主要由 Harness 承担。
+这些问题大多有更确定的系统规则。
 
-## 为什么要分层
+## 为什么要把两层分开
 
-如果把所有控制都写进 Prompt：
+看看两种写法。
 
-> 不要删除重要文件。  
-> 最多调用 10 次工具。  
-> 出错请重试，但不要太多次。  
-> 请控制成本。
+Prompt 里写：
 
-这些只是建议。
+> 最多调用十次工具，未经许可不要访问工作区外文件。
 
-程序可以做到：
+这是要求。
+
+Harness 里写：
 
 ~~~text
-delete outside workspace → reject
-step > 10 → stop
-retry > 2 → fail
-cost > $X → cancel
+if tool_calls > 10:
+    stop()
+
+if !path.in_workspace():
+    reject()
 ~~~
 
-确定规则应该尽量由确定机制执行。
+这是事实。
 
-## 模型负责模糊判断，Harness 负责硬边界
+前一种依赖模型遵守。
 
-这条原则在真实系统里非常有用。
+后一种即使模型判断错了，边界仍然存在。
 
-例如“这段代码是否应该重构”可以交给模型。
+## 一个非常实用的原则
 
-“这个 Agent 是否有权限修改 production.yaml”不应该交给模型自觉。
+> **模糊判断交给模型，确定约束交给程序。**
+
+“这段代码是否值得重构”适合模型判断。
+
+“这个 Agent 能否修改 production.yaml”应该由权限系统决定。
+
+“是否需要继续研究”可以让模型评估。
+
+“总成本不能超过上限”应该由 Runtime 强制执行。
 
 ## 地图坐标
 
-Harness 是 Control Plane。
+Harness 就是 Agent Loop 的 Control Plane。
 
-后面每一章，都会把一种“靠模型自觉”的要求变成可执行的系统机制。
+这一册后面所有章节，本质上都在做同一件事：
+
+> 把一条原本只能“提醒 Agent”的要求，变成运行时真正执行的机制。

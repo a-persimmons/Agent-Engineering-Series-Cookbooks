@@ -1,68 +1,69 @@
 # 24｜下一站：Evaluation Engineering
 
-Harness Engineering 到这里结束。
+到这里，整个系统已经从一句 Prompt 长成了一套 Runtime。
 
-现在回头看四册：
+回头看：
 
 ~~~text
-Prompt
-  ↓
-设计一次模型行为
+Prompt Engineering
+→ 设计一次模型行为
 
-Context
-  ↓
-控制模型看到什么
+Context Engineering
+→ 决定模型每一轮看到什么
 
-Agent
-  ↓
-让模型持续决策和行动
+Agent Engineering
+→ 让模型持续决策和行动
 
-Harness
-  ↓
-让行动长期可控
+Harness Engineering
+→ 让这套行动长期可控
 ~~~
 
-还差最后一个问题：
+但还有一个问题始终没有被彻底解决：
 
-> **我们怎么知道这些设计真的有效？**
+> **我们怎么知道这些设计真的更好了？**
 
-## Eval 贯穿前四册，但还没有被完整展开
+“这版感觉稳定一些”不够。
 
-Prompt 有 Prompt Eval。
+“我试了几个例子，都没问题”也不够。
 
-Context 有 Context Regression。
+## Eval 其实一直都在前四册里出现
 
-Agent 有 Outcome / Trajectory Eval。
+第一册有 Prompt Regression。
 
-Harness 有 Failure Injection 和 Recovery Test。
+第二册有 Context Regression。
 
-这些其实属于同一个更大的主题：
+第三册开始评 Agent Outcome 和 Trajectory。
 
-> 怎样把“感觉好像变好了”变成可以被证明、比较和回归的工程系统？
+第四册又加入 Timeout、Crash、Permission、Resume 等故障演练。
 
-## 第五册会进入什么
+这些并不是四种互不相关的测试。
+
+它们最终都在回答：
+
+> 系统应该怎样定义“好”，怎样发现“坏”，怎样证明修复有效，以及怎样防止下一次改动把旧能力弄坏。
+
+## 第五册会把它们收束起来
 
 **《Evaluation Engineering：让系统可验证、可回归》**
 
-会从：
+会进入：
 
 - Dataset；
+- Test Case Design；
 - Rubric；
 - Metrics；
 - LLM-as-Judge；
+- Human Review；
 - Trace Eval；
 - Failure Taxonomy；
 - Regression；
 - Online Metrics；
-- Human Review；
-- Improvement Loop；
+- Improvement Loop。
 
-一路走到：
+最后一册不只是讲“怎么打分”。
 
-> 如何让真实失败不断沉淀成下一版系统的能力。
+它要解决的是整个系列最终的问题：
 
-Harness 负责让 Agent 在坏情况下可控。
+> **怎样让一次真实失败，变成下一版系统不会轻易再犯的能力。**
 
-Evaluation Engineering 负责回答：
-
-> **坏在哪里、修好了吗、有没有把别的地方修坏。**
+这也是 AI Engineering 从经验走向工程的最后一步。

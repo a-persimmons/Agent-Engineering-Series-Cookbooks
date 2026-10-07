@@ -1,76 +1,96 @@
-# 22｜从 Coding Agent 看 Harness 为什么重要
+# 22｜从 Coding Agent 看 Harness 为什么会越长越厚
 
-Coding Agent 是观察 Harness 最直观的场景。
+Coding Agent 是观察 Harness 最好的场景之一。
 
-它有很强的 Action：
+因为它天生拥有很强的 Action：
 
 - 读写文件；
 - 运行 Shell；
+- 安装依赖；
 - Git 操作；
 - 测试；
-- 网络；
-- 调用其他工具。
+- 网络访问；
+- 调用外部工具。
 
-Action 越强，Harness 越重要。
+能力越强，运行边界越不能含糊。
 
-## 一个 Coding Agent 周围有什么
-
-可以看到：
+## 一开始，它可能只有一个 Loop
 
 ~~~text
-Instructions
-Workspace
-Tool Registry
-Permission
-Sandbox
-Hooks
-State
-Checkpoint
-Context Compaction
-Trace
-Budget
-Approval
-Error Recovery
+Model
+↓
+read_file
+↓
+write_file
+↓
+run_tests
+↓
+Model
 ~~~
 
-这些东西没有一个是“模型推理算法”。
+跑几次以后，系统开始长出新的东西。
 
-但它们共同决定 Coding Agent 能否持续工作。
+第一次误改目录，于是增加 writable scope。
 
-## AGENTS.md / 项目指令放在哪里
+第一次命令卡死，于是增加 timeout。
 
-它们更像 Environment Instructions。
+第一次任务中断后丢进度，于是增加 checkpoint。
 
-告诉 Agent：
+第一次重复执行写操作，于是增加 idempotency。
 
-- 这个项目怎样工作；
+第一次事故无法复盘，于是增加 trace。
+
+Harness 很少是一次设计完整的。
+
+它通常是被真实失败一点点“逼”出来的。
+
+## 项目指令也属于 Harness 环境
+
+像 AGENTS.md、项目说明、测试约定，会告诉 Agent：
+
+- 这个仓库怎样工作；
 - 哪些命令可用；
-- 代码规范；
-- 测试方式；
-- 目录约束。
+- 哪些目录有特殊规则；
+- 什么算完成。
 
-Harness 负责保证这些指令和真实环境一致。
+但文本规则和真实环境必须一致。
 
-## 为什么 Harness 会不断吸收经验
+如果文档说“运行 npm test”，环境里根本没有依赖，Agent 仍然无法工作。
 
-Agent 某次犯错：
+所以 Harness 不只是 Instructions。
 
-> 修改了不该改的目录。
+它还必须保证：
+
+> Instructions 描述的世界，与 Agent 实际运行的世界尽量一致。
+
+## 从错误提醒到系统机制
+
+假设 Agent 某次改了不该改的目录。
 
 最弱的修法：
 
-> Prompt 加一句“不要改”。
+> 在 Prompt 里加一句“请不要修改这个目录”。
 
-更强的修法：
+更稳的修法：
 
-> Permission 层限制 writable_paths。
+~~~text
+writable_paths = allowed_scope
+outside_scope = hard reject
+~~~
 
-这就是 Harness Engineering 的核心进化方式：
+这就是 Harness 最值得形成的思维：
 
-> **把重复出现的失败，从提醒变成机制。**
+> **如果一种失败反复出现，而且可以由程序明确判断，就不要永远让模型靠自觉避免。**
 
 ## 地图坐标
 
-真实 Coding Agent 不是一个复杂 Prompt。
+真实 Coding Agent 往往是四层叠在一起：
 
-它是 Model + Agent Loop + Context System + Harness 的组合。
+~~~text
+Model
++ Context System
++ Agent Loop
++ Harness
+~~~
+
+把这四层分开以后，很多“Agent 为什么这么复杂”就会变得清楚。
