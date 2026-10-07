@@ -15,6 +15,7 @@ export default defineConfig({
       { text: '第二本：Context', link: '/context-engineering/' },
       { text: '第三本：Agent', link: '/agent-engineering/' },
       { text: '第四本：Harness', link: '/harness-engineering/' },
+      { text: '第五本：Evaluation', link: '/evaluation-engineering/' },
       { text: 'GitHub', link: 'https://github.com/a-persimmons/Agent-Engineering-Series-Cookbooks' }
     ],
     sidebar: {
@@ -199,6 +200,52 @@ export default defineConfig({
         { text: '附录', items: [
           { text: 'Harness 评审清单', link: '/harness-engineering/checklist' },
           { text: '延伸阅读', link: '/harness-engineering/references' }
+        ]}
+      ],
+      '/evaluation-engineering/': [
+        { text: '开始之前', items: [
+          { text: '这本书要解决什么', link: '/evaluation-engineering/' },
+          { text: 'Evaluation 核心地图', link: '/evaluation-engineering/map' }
+        ]},
+        { text: '第一部｜先定义“好”', items: [
+          { text: '01 Eval 不是打一个分', link: '/evaluation-engineering/01-not-score' },
+          { text: '02 为什么 Demo 会骗人', link: '/evaluation-engineering/02-demo-lies' },
+          { text: '03 AI 系统有多层 Eval', link: '/evaluation-engineering/03-eval-layers' },
+          { text: '04 Failure Taxonomy', link: '/evaluation-engineering/04-failure-taxonomy' },
+          { text: '05 Target', link: '/evaluation-engineering/05-target' }
+        ]},
+        { text: '第二部｜设计测试世界', items: [
+          { text: '06 Dataset', link: '/evaluation-engineering/06-dataset' },
+          { text: '07 Case Design', link: '/evaluation-engineering/07-case-design' },
+          { text: '08 Slices', link: '/evaluation-engineering/08-slices' },
+          { text: '09 Dataset Versioning', link: '/evaluation-engineering/09-versioning' }
+        ]},
+        { text: '第三部｜怎样判断结果', items: [
+          { text: '10 Rubric', link: '/evaluation-engineering/10-rubric' },
+          { text: '11 Deterministic Checks', link: '/evaluation-engineering/11-deterministic' },
+          { text: '12 LLM-as-Judge', link: '/evaluation-engineering/12-llm-judge' },
+          { text: '13 Human Eval', link: '/evaluation-engineering/13-human-eval' },
+          { text: '14 Pairwise Evaluation', link: '/evaluation-engineering/14-pairwise' }
+        ]},
+        { text: '第四部｜评整个系统', items: [
+          { text: '15 Agent Trajectory Eval', link: '/evaluation-engineering/15-agent-trajectory' },
+          { text: '16 Tool / Action Eval', link: '/evaluation-engineering/16-tool-eval' },
+          { text: '17 Context 与 Harness Eval', link: '/evaluation-engineering/17-context-harness-eval' },
+          { text: '18 System Metrics', link: '/evaluation-engineering/18-system-metrics' }
+        ]},
+        { text: '第五部｜从回归到生产', items: [
+          { text: '19 Regression', link: '/evaluation-engineering/19-regression' },
+          { text: '20 Production Feedback', link: '/evaluation-engineering/20-production' },
+          { text: '21 Trace Mining', link: '/evaluation-engineering/21-trace-mining' },
+          { text: '22 Improvement Loop', link: '/evaluation-engineering/22-improvement-loop' }
+        ]},
+        { text: '第六部｜让系统自己积累能力', items: [
+          { text: '23 Mini Coding Agent Eval Lab', link: '/evaluation-engineering/23-case-study' },
+          { text: '24 系列终章', link: '/evaluation-engineering/24-series-end' }
+        ]},
+        { text: '附录', items: [
+          { text: 'Evaluation 评审清单', link: '/evaluation-engineering/checklist' },
+          { text: '延伸阅读', link: '/evaluation-engineering/references' }
         ]}
       ]
     },

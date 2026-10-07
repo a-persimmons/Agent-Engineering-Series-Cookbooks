@@ -18,6 +18,9 @@ hero:
     - theme: alt
       text: 第四本：Harness
       link: /harness-engineering/
+    - theme: alt
+      text: 第五本：Evaluation
+      link: /evaluation-engineering/
 
 features:
   - title: Prompt Engineering
@@ -29,7 +32,7 @@ features:
   - title: Harness Engineering
     details: 用权限、沙箱、恢复、持久化和可观测性把 Agent Loop 变成可靠软件。已完成初版。
   - title: Evaluation Engineering
-    details: 用评测、失败分类与回归把经验固化成系统能力。
+    details: 从 Target、Dataset、Rubric 到 Regression 与 Production Feedback，让系统可验证、可回归。已完成初版。
 ---
 
 ## 为什么做这个系列
@@ -45,3 +48,5 @@ Few-shot、CoT、ReAct、RAG、Memory、MCP、Reflection、Agent、Harness……
 - 第三本：怎样让模型持续决策与行动？
 
 - 第四本：怎样让 Agent 的行动长期可控、可恢复、可观察？
+
+- 第五本：怎样证明系统真的变好，并把真实失败变成下一版能力？
