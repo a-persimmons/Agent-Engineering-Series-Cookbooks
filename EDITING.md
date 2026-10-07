@@ -86,3 +86,12 @@
 - Error Recovery 在第三册讨论“失败后下一步策略”，第四册讨论“运行时怎样安全重试、对账与恢复”。
 - Stop 同时包含语义停止条件与硬边界；硬边界必须由 Harness 强制。
 - Agent Eval 重点看 Outcome + Trajectory；系统可靠性指标在后两册展开。
+
+
+## 第五册终审补充
+
+- Dataset 要防止 eval leakage；必要时区分 development / regression / holdout。
+- Agent Eval 中 Case 与 Trial 必须区分；一次运行不能自动代表稳定能力。
+- 重要发布决策要考虑 repeated trials、随机波动、Slice 与置信度，而不是只看单次平均分。
+- Capability Eval 用来爬能力上限，Regression Eval 用来保护已经拥有的能力，两者目标不同。
+- Production Signal 也有盲区和偏差，不能自动当作 Ground Truth。
