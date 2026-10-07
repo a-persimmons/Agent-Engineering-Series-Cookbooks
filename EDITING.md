@@ -22,6 +22,10 @@
 
 **Goal → Context → Decision → Action → Observation → State → Feedback → Loop**
 
+第四册：
+
+**Permission → Isolation → Validation → Limits → Recovery → Persistence → Observability → Evaluation**
+
 所有新技巧都必须能挂回当前册的主地图。设计和 Debug 复用同一张图。
 
 ## 第三轮：文学 / 编辑精修
@@ -41,3 +45,12 @@
 - Tool Design 必须包含副作用、错误和返回语义，不只讲 Function Calling。
 - Agent Eval 同时看 Outcome、Trajectory 与 System。
 - 第 23 章用一个持续演化的 Mini Coding Agent 把整张 Loop 串起来。
+
+
+## 第四册额外约束
+
+- Harness 必须被解释为 Agent Loop 的 Control Plane，而不是某个框架名称。
+- Permission、Sandbox、Validation、Limits、Recovery、Persistence、Observability、Evaluation 各自承担独立职责。
+- Retry、Timeout、Resume 必须讨论副作用与幂等，不能只给“重试几次”的表面做法。
+- Long-running Task 要有阶段、Checkpoint、Progress 与 Pause / Resume。
+- Harness Eval 优先测试坏情况：越权、超时、崩溃、重复副作用、恢复失败。

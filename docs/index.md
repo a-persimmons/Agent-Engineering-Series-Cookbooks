@@ -15,6 +15,9 @@ hero:
     - theme: alt
       text: 第三本：Agent
       link: /agent-engineering/
+    - theme: alt
+      text: 第四本：Harness
+      link: /harness-engineering/
 
 features:
   - title: Prompt Engineering
@@ -24,7 +27,7 @@ features:
   - title: Agent Engineering
     details: 从最小 Loop 出发，理解 ReAct、Planning、Reflection、Tool、State 与 Multi-Agent。已完成初版。
   - title: Harness Engineering
-    details: 让 Agent 可控、可恢复、可观察，并能在真实环境长期运行。
+    details: 用权限、沙箱、恢复、持久化和可观测性把 Agent Loop 变成可靠软件。已完成初版。
   - title: Evaluation Engineering
     details: 用评测、失败分类与回归把经验固化成系统能力。
 ---
@@ -40,3 +43,5 @@ Few-shot、CoT、ReAct、RAG、Memory、MCP、Reflection、Agent、Harness……
 - 第一本：怎样设计一次模型行为？
 - 第二本：怎样控制模型每一轮看到的世界？
 - 第三本：怎样让模型持续决策与行动？
+
+- 第四本：怎样让 Agent 的行动长期可控、可恢复、可观察？

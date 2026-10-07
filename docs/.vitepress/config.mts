@@ -14,6 +14,7 @@ export default defineConfig({
       { text: '第一本：Prompt', link: '/prompt-engineering/' },
       { text: '第二本：Context', link: '/context-engineering/' },
       { text: '第三本：Agent', link: '/agent-engineering/' },
+      { text: '第四本：Harness', link: '/harness-engineering/' },
       { text: 'GitHub', link: 'https://github.com/a-persimmons/Agent-Engineering-Series-Cookbooks' }
     ],
     sidebar: {
@@ -152,6 +153,52 @@ export default defineConfig({
         { text: '附录', items: [
           { text: 'Agent 设计与评审清单', link: '/agent-engineering/checklist' },
           { text: '延伸阅读', link: '/agent-engineering/references' }
+        ]}
+      ],
+      '/harness-engineering/': [
+        { text: '开始之前', items: [
+          { text: '这本书要解决什么', link: '/harness-engineering/' },
+          { text: 'Harness 核心地图', link: '/harness-engineering/map' }
+        ]},
+        { text: '第一部｜为什么需要 Harness', items: [
+          { text: '01 能跑还远远不够', link: '/harness-engineering/01-why-harness' },
+          { text: '02 Agent 的 Control Plane', link: '/harness-engineering/02-control-plane' },
+          { text: '03 Harness Failure', link: '/harness-engineering/03-harness-failures' }
+        ]},
+        { text: '第二部｜运行边界', items: [
+          { text: '04 Permission', link: '/harness-engineering/04-permission' },
+          { text: '05 Sandbox', link: '/harness-engineering/05-sandbox' },
+          { text: '06 Validation', link: '/harness-engineering/06-validation' },
+          { text: '07 Timeout 与 Cancellation', link: '/harness-engineering/07-timeout-cancel' },
+          { text: '08 Retry', link: '/harness-engineering/08-retry' },
+          { text: '09 Budget', link: '/harness-engineering/09-budget-limits' }
+        ]},
+        { text: '第三部｜失败以后还能继续', items: [
+          { text: '10 Checkpoint', link: '/harness-engineering/10-checkpoint' },
+          { text: '11 Persistence 与 Resume', link: '/harness-engineering/11-persistence-resume' },
+          { text: '12 Idempotency', link: '/harness-engineering/12-idempotency' },
+          { text: '13 Recovery', link: '/harness-engineering/13-recovery' }
+        ]},
+        { text: '第四部｜看见与治理', items: [
+          { text: '14 Observability', link: '/harness-engineering/14-observability' },
+          { text: '15 Audit', link: '/harness-engineering/15-audit' },
+          { text: '16 Hooks', link: '/harness-engineering/16-hooks' },
+          { text: '17 Long-running Tasks', link: '/harness-engineering/17-long-running' },
+          { text: '18 Approval', link: '/harness-engineering/18-approval' },
+          { text: '19 Environment', link: '/harness-engineering/19-environment' }
+        ]},
+        { text: '第五部｜工程化与验证', items: [
+          { text: '20 Harness Evals', link: '/harness-engineering/20-evals' },
+          { text: '21 Harness 与 Framework', link: '/harness-engineering/21-frameworks' },
+          { text: '22 从真实 Coding Agent 看 Harness', link: '/harness-engineering/22-real-systems' }
+        ]},
+        { text: '第六部｜把 Agent 硬化', items: [
+          { text: '23 Mini Coding Agent → Harness', link: '/harness-engineering/23-case-study' },
+          { text: '24 下一站：Evaluation', link: '/harness-engineering/24-next' }
+        ]},
+        { text: '附录', items: [
+          { text: 'Harness 评审清单', link: '/harness-engineering/checklist' },
+          { text: '延伸阅读', link: '/harness-engineering/references' }
         ]}
       ]
     },
