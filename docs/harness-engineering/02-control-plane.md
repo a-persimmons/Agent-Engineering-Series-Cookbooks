@@ -71,6 +71,8 @@ if !path.in_workspace():
 
 > **模糊判断交给模型，确定约束交给程序。**
 
+这不是说程序只能做“死规则”。更准确地说，**任何可以被稳定表达成机器可执行策略的边界，都优先放进 Harness**；模型负责处理规则无法穷举的判断。
+
 “这段代码是否值得重构”适合模型判断。
 
 “这个 Agent 能否修改 production.yaml”应该由权限系统决定。
@@ -81,7 +83,7 @@ if !path.in_workspace():
 
 ## 地图坐标
 
-Harness 就是 Agent Loop 的 Control Plane。
+可以把 Harness 理解成 Agent Loop 的 **Control Plane / Runtime Boundary**。这个说法强调的是职责，不要求你的代码里真的存在一个叫 control-plane 的独立服务。
 
 这一册后面所有章节，本质上都在做同一件事：
 
