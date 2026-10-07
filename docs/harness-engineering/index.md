@@ -17,6 +17,8 @@
 
 这一册的主地图是：
 
+![Harness Engineering 核心地图](/diagrams/harness/core-map.svg)
+
 **Permission → Isolation → Validation → Limits → Recovery → Persistence → Observability → Evaluation**
 
 ## 读完后应该形成三种反射
