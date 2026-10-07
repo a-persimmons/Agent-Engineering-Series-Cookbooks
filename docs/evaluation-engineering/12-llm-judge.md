@@ -10,6 +10,9 @@ LLM Judge 很诱人。
 
 自动化并不会自动带来可靠性。
 
+
+![Deterministic、LLM Judge 与 Human Eval 的分工](/diagrams/evaluation/grader-stack.svg)
+
 ## Judge 也是一个会犯错的模型
 
 它会受很多东西影响：
