@@ -13,6 +13,8 @@ Harness
 
 所以做 Eval 前，先问：
 
+![AI 系统的多层 Eval](/diagrams/evaluation/layers.svg)
+
 > **我现在评的是哪一层？**
 
 ## Output Layer
