@@ -10,6 +10,9 @@ Audit 更关心：
 
 它面向责任、合规和事后追溯。
 
+
+![Observability 与 Audit 的职责差异](/diagrams/harness/observability-audit.svg)
+
 ## 哪些行为值得单独 Audit
 
 例如：
