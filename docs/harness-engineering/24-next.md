@@ -2,6 +2,8 @@
 
 到这里，整个系统已经从一句 Prompt 长成了一套 Runtime。
 
+![从 Harness Engineering 进入 Evaluation Engineering](/diagrams/harness/to-evaluation.svg)
+
 回头看：
 
 ~~~text
