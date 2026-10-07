@@ -2,6 +2,8 @@
 
 五本书不是五个并列专题。
 
+![Agent Engineering Series 总地图](/diagrams/evaluation/series-loop.svg)
+
 它们描述的是同一个 AI 系统，从“一个人想让模型做什么”，一直到“系统怎样从真实失败里积累能力”的五个尺度。
 
 ~~~text
