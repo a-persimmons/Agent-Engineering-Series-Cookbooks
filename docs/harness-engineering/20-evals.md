@@ -55,6 +55,8 @@ Harness Eval 更常问：
 - 可恢复；
 - 不扩大副作用。
 
+这里的重点是**机制验证**，不是建立完整 Eval 平台。Dataset、Rubric、Slices、Judge、Regression 与 Production Feedback 会在第五册统一展开。
+
 ## 真实事故要进入回归
 
 每一次生产 Harness Failure，都应该变成自动测试。
