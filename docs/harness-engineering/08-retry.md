@@ -1,68 +1,86 @@
-# 08｜Retry：重试不是“再来一次”
+# 08｜Retry：只解决“值得再试一次”的失败
 
-最简单的 Retry：
+Retry 很容易被写成：
 
 ~~~text
 失败 → 再试三次
 ~~~
 
-很危险。
+这不是恢复策略，只是把同一个动作重复几遍。
 
-因为失败原因不同，正确动作也不同。
+Retry 真正适合的是一类很窄的问题：
 
-## 先分类
+> **动作本身仍然正确，只是这一次执行条件暂时不好。**
 
-### Transient
+## 什么时候适合 Retry
 
-网络抖动、限流、暂时不可用。
+例如：
 
-可以指数退避后重试。
+- 网络瞬时失败；
+- 429 限流；
+- 服务短暂不可用；
+- 短时锁冲突。
+
+这类错误通常不会改变 Action 本身。
+
+可以：
+
+~~~text
+Transient Failure
+↓
+Backoff
+↓
+Retry
+~~~
+
+## 什么时候不该 Retry
 
 ### Invalid Input
 
-参数不合法。
+参数错了。
 
-需要 Repair，不是原样重试。
+应该 Repair。
 
 ### Permission
 
-权限不足。
+权限不够。
 
-重试不会改变权限。
+应该 Approval、换路径或停止。
 
 ### Business Failure
 
 库存不足、状态不允许。
 
-应该换策略或停止。
+重试不会改变业务事实。
 
-### Unknown Side Effect
+### Side Effect Unknown
 
-请求超时，但不知道动作是否已生效。
+请求超时，但不知道外部动作是否已经成功。
 
-先查询状态，不能盲目重试。
+必须先对账。
 
-## Retry Budget
+## Retry 本身也要有预算
 
-即使是临时错误，也不能无限试。
+至少控制：
 
-限制：
+- max attempts；
+- total retry time；
+- backoff；
+- jitter；
+- total cost。
 
-- 最大次数；
-- 最大总时间；
-- 最大成本；
-- 每类错误不同策略。
+否则“临时失败”也可能拖死整个任务。
 
-## 把重试历史放进 Observation
+## 这一章只解决 Retry
 
-模型需要知道：
+更大的问题：
 
-> 这个动作已经失败两次，错误完全相同。
+> Retry 不合适时，系统要 Repair、Replan、Rollback、Pause 还是 Abort？
 
-否则它可能自己再触发一轮重复。
+留到第 13 章 Recovery。
 
 ## 地图坐标
 
-Retry 属于 **Recovery**。
+Retry 是 **Recovery** 中的一种具体策略。
 
-好的 Retry 不是“更有耐心”，而是根据失败语义选择下一步。
+它的适用范围应该很窄，而不是默认错误处理。

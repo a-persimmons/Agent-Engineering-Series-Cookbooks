@@ -1,67 +1,75 @@
-# 14｜Observability：出问题时，你能不能回答“它到底做了什么”
+# 14｜Observability：为了理解系统发生了什么
 
-Agent 系统最糟糕的事故描述之一：
+Observability 首先服务于调试和运营。
 
-> 不知道为什么，它自己就这么做了。
+问题是：
 
-如果生产系统只能保存最终回答，这几乎必然发生。
+> 这一次任务为什么走成了现在这样？
 
-## Harness 至少要记录一条执行 Trace
+## 一条有用的 Agent Trace
 
-每一步：
+通常需要：
 
-- Run / Task ID；
-- Agent / Model；
+- Task / Run ID；
+- Model；
 - Context 版本；
 - Decision；
 - Tool；
 - 参数；
-- Validation；
-- Permission；
+- Permission / Validation 结果；
 - Observation；
-- State 变化；
+- State Diff；
 - Retry；
 - Cost；
 - Duration；
 - Stop Reason。
 
-## Trace 和普通日志不完全一样
+它要能把一次任务串起来。
 
-普通日志经常围绕程序组件。
+## Trace 与普通组件日志的区别
 
-Agent Trace 更强调**一次任务轨迹**。
+传统日志可能分散在：
 
-你需要能从任务入口一路看到：
+- API；
+- Tool；
+- Worker；
+- Database。
+
+Agent Trace 更强调一条行为链：
 
 ~~~text
 Goal
 → Decision
 → Tool
 → Result
-→ State
+→ State Change
 → Next Decision
 ~~~
 
-## 关联 ID 很重要
+因此统一关联 ID 很重要。
 
-长任务、多 Agent、后台 Tool 如果没有统一 Trace ID，很难把分散日志拼回来。
+## Observability 不等于“什么都记录”
 
-## 敏感数据要处理
+完整保存每个 Prompt、文件和 Tool Result 可能带来新的隐私和安全问题。
 
-Observability 不能变成数据泄漏源。
+要设计：
 
-记录前要考虑：
+- redact；
+- sampling；
+- retention；
+- sensitive fields；
+- access control。
 
-- PII；
-- Secret；
-- Token；
-- 用户文件；
-- 业务敏感字段。
+## 这一章关注“看懂运行”
 
-有时需要 redact，而不是完整保存。
+下一章 Audit 会处理另一个问题：
+
+> 哪些高风险行为必须留下可追责、不可轻易篡改的记录？
+
+二者目标不同。
 
 ## 地图坐标
 
-Observability 让 Harness 的其他机制可见。
+Observability 让 Harness 的运行过程可理解。
 
-没有 Trace，Permission、Retry、Recovery 出错后都很难诊断。
+它是 Debug、Eval 和 Recovery 的基础数据层。

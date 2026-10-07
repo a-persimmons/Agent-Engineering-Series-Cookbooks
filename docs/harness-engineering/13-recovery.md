@@ -1,65 +1,83 @@
-# 13｜Recovery：失败以后，系统应该回到哪里
+# 13｜Recovery：失败以后，系统有哪几条路
 
-Retry 只是 Recovery 的一种。
+Retry 只适合“动作仍然正确，只是这次没执行好”。
 
-真实故障发生后，系统可能需要：
+Recovery 处理更大的问题：
 
-- Retry；
-- Repair；
-- Replan；
-- Rollback；
-- Resume；
-- Ask Human；
-- Abort。
+> 失败发生后，下一种运行状态应该是什么？
 
-## 先判断恢复目标
+## 常见恢复动作
 
-不是所有失败都应该“继续任务”。
+### Retry
 
-例如：
+原动作仍然正确，稍后再试。
 
-- 网络抖动：继续；
-- 权限撤销：暂停；
-- 写了一半：对账；
-- 数据损坏：回滚；
-- Goal 已失效：终止。
+### Repair
 
-Recovery 的第一步是判断世界现在处于什么状态。
+动作思路没错，但参数或输入需要修正。
 
-## Compensating Action
+### Replan
 
-有些外部动作无法真正回滚。
+当前路径已经不合适，需要换方案。
 
-可以设计补偿动作。
+### Rollback / Compensate
 
-例如：
+已经产生副作用，需要撤销或补偿。
+
+### Resume
+
+进程或任务中断，从可信状态继续。
+
+### Ask Human
+
+系统无法安全决定。
+
+### Abort
+
+任务已经无法继续，明确停止。
+
+## 先判断“世界现在是什么状态”
+
+这是 Recovery 最重要的一步。
+
+比如写操作超时。
+
+不能直接问：
+
+> 要不要再试一次？
+
+应该先问：
+
+> 外部系统到底已经写成功了吗？
+
+只有知道当前现实状态，才能选择恢复动作。
+
+## Recovery Policy 应该和错误类别绑定
 
 ~~~text
-create_booking
-↓
-后续失败
-↓
-cancel_booking
+transient
+→ bounded retry
+
+invalid input
+→ repair
+
+permission
+→ approval / stop
+
+side effect unknown
+→ reconcile
+
+plan invalid
+→ replan
+
+irreversible failure
+→ compensate / escalate
 ~~~
 
-补偿不是时间倒流，只是把业务状态恢复到可接受状态。
-
-## Recovery 需要知道失败历史
-
-如果一个方案已经失败三次，就不应该恢复后继续原样尝试。
-
-所以失败原因、次数、已尝试策略应该进入持久 State。
-
-## 恢复点不要太早，也不要太晚
-
-回到很早的 Checkpoint，会重复大量工作。
-
-回到太晚的位置，可能继续携带错误状态。
-
-Harness 需要定义可以信任的恢复边界。
+这样恢复才不会依赖模型临场猜。
 
 ## 地图坐标
 
-Recovery 是 Harness 面对不确定环境的核心能力。
+Recovery 是 Harness 的故障状态机。
 
-目标不是“永远不失败”，而是让失败以后系统仍然可预测。
+目标不是让系统“不失败”，而是让每类失败都有一个可预测的去向。

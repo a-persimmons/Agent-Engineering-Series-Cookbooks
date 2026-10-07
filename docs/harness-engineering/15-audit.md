@@ -1,60 +1,88 @@
-# 15｜Audit：哪些事情必须留下不可抵赖的记录
+# 15｜Audit：为了证明谁做了什么
 
-Observability 主要为了调试和运营。
+Observability 关注：
 
-Audit 更关注责任与追溯：
+> 系统为什么这样运行？
 
-> 谁在什么时间，以什么权限，执行了什么高风险动作？
+Audit 更关心：
 
-## 哪些动作更需要审计
+> **谁在什么权限下，对什么资源执行了什么高风险动作？**
 
-- 数据删除；
+它面向责任、合规和事后追溯。
+
+## 哪些行为值得单独 Audit
+
+例如：
+
+- 删除数据；
 - 权限变更；
-- 部署；
+- 发布；
 - 支付；
-- 外部发送；
+- 外部正式发送；
 - 敏感数据访问；
 - 人工审批。
 
-## Audit Record 可以包含
+普通 read_file Trace 不一定需要和生产删除操作使用同样的审计强度。
+
+## Audit Record 的重点
+
+可以包括：
 
 ~~~text
 actor
 task_id
 action
 resource
-input_hash
 permission
 approval
 timestamp
 result
-artifact
+artifact_hash
 ~~~
 
-不一定把所有 Context 原文都存进去，尤其要避免敏感数据扩散。
+重点是：
 
-## Harness 为什么比 Prompt 更适合做审计
+- 谁；
+- 为什么有权；
+- 做了什么；
+- 作用到哪里；
+- 结果是什么。
 
-Prompt 可以要求：
+## Audit Point 应该在执行层
 
-> 请记录你做了什么。
+如果只让模型输出：
 
-但这仍然依赖模型配合。
+> “我刚才删除了 X。”
 
-Harness 可以在 Tool Gateway 统一记录每一次真实执行。
+这个记录没有可信性。
 
-这才是可信审计点。
+更可靠的位置是 Tool Gateway：
 
-## Audit 也能帮助产品改进
+~~~text
+Permission Check
+↓
+Audit Before
+↓
+Execute
+↓
+Audit Result
+~~~
 
-如果同一种高风险 Action 总是需要人工批准，可以分析：
+因为真正副作用只能从执行层确认。
 
-- 是否可以建立更清晰的自动规则；
-- Tool 粒度是否太大；
-- 哪些条件下其实风险可控。
+## Audit 和 Trace 可以共享数据，但目的不同
+
+Trace 可以为性能调试保留较多细节。
+
+Audit 要：
+
+- 稳定；
+- 权限受控；
+- 生命周期明确；
+- 高风险记录不可轻易修改。
 
 ## 地图坐标
 
-Audit 是 **Observability + Governance** 的延伸。
+Audit 是 **Observability + Governance**。
 
-它让 Agent 的外部副作用真正可追责。
+它让 Agent 的真实外部行为可以被追责，而不只是“看起来有日志”。

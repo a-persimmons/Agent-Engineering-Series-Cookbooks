@@ -1,56 +1,68 @@
-# 11｜Persistence：保存状态只是第一步，恢复才是真正的考验
+# 11｜Persistence 与 Resume：从存档回到现实世界
 
-把 State 写进数据库并不等于任务可恢复。
+Checkpoint 给出一份可恢复状态。
 
-真正的 Resume 需要回答：
+Persistence 解决的是：
 
-> 系统重新启动后，怎样知道该从哪一步继续，而且不会把已经执行过的副作用再做一次？
+> 这份状态怎样跨进程、跨机器、跨时间可靠存在？
 
-## Persistence 的几类对象
+Resume 再问：
 
-### Task State
+> 重新启动以后，能不能安全地从这里继续？
 
-当前目标、计划、步骤、阻塞。
+## Persistence 不只有 Task State
 
-### Conversation / Context State
+可能还需要保存：
 
-需要继续携带的上下文。
+### Runtime State
+
+Goal、Plan、当前 Step、阻塞。
 
 ### Artifacts
 
-文件、报告、代码变更、检索结果。
+代码 diff、报告、文件、检索结果。
 
 ### Execution Metadata
 
-Tool Calls、状态、时间、版本、预算。
+Tool Calls、状态、时间、版本、Budget。
 
-## Resume 最大的风险：重复执行
+### External References
 
-假设 Agent：
+已经创建的订单、部署、Job、审批单。
 
-1. 成功发送邮件；
-2. 还没写 Checkpoint 就崩溃。
+## Resume 最大的风险不是“读不到存档”
 
-恢复后如果只看到“当前步骤 = send_email”，它可能再发一次。
+而是：
 
-这就是 Persistence 必须和 Idempotency 一起设计的原因。
+> 存档里的世界，和现实世界已经不一样了。
 
-## 恢复前先 Reconcile
+例如 Checkpoint 写着：
 
-Restart 时可以先检查：
+~~~text
+next_step = send_email
+~~~
 
-- 上一步 Action 是否已经生效；
-- 外部资源当前状态；
-- Checkpoint 是否完整；
-- Context 是否已经过期；
-- 任务是否仍然有效。
+但上一次进程可能已经把邮件发出，只是没来得及更新 Checkpoint。
 
-Resume 不是机械从行号继续。
+机械 Resume 就会再发一次。
 
-它是一次状态对账。
+## 恢复前要 Reconcile
+
+重新进入 Loop 前检查：
+
+- 上一个 Action 是否真正完成；
+- 外部资源现在是什么状态；
+- 权限是否仍有效；
+- Context 是否过期；
+- Goal 是否仍然成立；
+- Budget 是否需要重新授权。
+
+Persistence 保存过去。
+
+Resume 必须先重新确认现在。
 
 ## 地图坐标
 
-Persistence 让 State 跨进程、跨时间存在。
+Persistence 让 State 跨时间存在。
 
-Recovery 决定重新进入 Loop 前怎样校准这个 State。
+Resume 把保存的 State 与当前世界重新对齐，然后才允许 Agent 回到 Loop。
