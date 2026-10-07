@@ -6,6 +6,8 @@
 
 当 Agent 连续工作几十轮、几小时甚至几天，旧过程如果一直留在 Runtime Context，会慢慢挤掉当前真正需要的状态。
 
+![Long-running Context 的三层结构](/diagrams/context/long-running.svg)
+
 ## 长任务为什么必须分层
 
 持续执行会积累：
