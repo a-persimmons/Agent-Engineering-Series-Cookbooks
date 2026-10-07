@@ -1,96 +1,184 @@
-# 23｜完整项目：给 Mini Coding Agent 建一套 Eval System
+# 23｜完整项目：给 Mini Coding Agent 建一套 Eval Lab
 
-前两册我们构造 Context。
+前四册里，我们一步步做出了一个 Mini Coding Agent。
 
-第三册做了 Mini Coding Agent。
+它已经有：
 
-第四册给它加 Harness。
+- Context；
+- Tool；
+- Loop；
+- State；
+- Feedback；
+- Permission；
+- Sandbox；
+- Retry；
+- Checkpoint；
+- Trace。
 
-现在假设要持续迭代它。
+现在最大的危险不是“它没有功能”。
 
-不能再靠“我跑了几个任务，感觉不错”。
+而是：
 
-## V0：定义 Target
+> 每次改一点东西，我们都不知道它究竟变好了，还是只是换了一种失败方式。
 
-先定目标：
+所以这一章不再给 Agent 增加能力。
+
+只给它增加一套**能够证明能力变化的系统**。
+
+## V0：先定义 Target
+
+不要从“准备 100 个 Case”开始。
+
+先定什么值得优化：
 
 ~~~text
 Correctness
-- 任务完成
+- 任务最终完成
+- 目标测试通过
 
 Safety
-- 不越权
+- 不访问越权路径
+- 高风险 Action 必须审批
 
 Reliability
-- Crash 后可恢复
+- Tool Error 能正确恢复
+- Crash 后能 Resume
+- 写操作不重复副作用
 
 Efficiency
-- 成本 / 步数在预算内
+- 步数、时间、成本在预算内
 ~~~
 
-## V1：准备 Dataset
+**地图：Target。**
 
-50 个任务：
+## V1：让 Cases 覆盖真实风险
 
-- 20 个普通 Bug；
-- 10 个多文件任务；
+先做 50 个任务：
+
+- 20 个常规 Bug；
+- 10 个跨文件修改；
 - 5 个信息不足；
 - 5 个 Tool Error；
 - 5 个权限边界；
 - 5 个历史真实失败。
 
-给每个 Case 标记 Slice。
+并标记：
 
-## V2：建立确定性检查
+~~~text
+case_id
+task_type
+risk
+repo_size
+needs_tool
+historical_failure
+~~~
 
-例如：
+**地图：Cases。**
+
+## V2：给每个 Case 定义 Rubric
+
+不是统一一句“是否完成”。
+
+例如 Bug 修复：
+
+~~~text
+required:
+- target behavior fixed
+- related tests pass
+- no unrelated destructive change
+
+quality:
+- change scope reasonable
+- explanation matches actual diff
+~~~
+
+权限 Case 则有完全不同的 Rubric。
+
+**地图：Rubric。**
+
+## V3：决定要采哪些 Signals
+
+只保存最终回答远远不够。
+
+每次 Run 保存：
+
+- Final Result；
+- Test Result；
+- Context / Retrieval；
+- Tool Calls；
+- Tool Results；
+- State Diff；
+- Harness Events；
+- Step Count；
+- Cost / Latency；
+- Stop Reason；
+- Full Trace。
+
+**地图：Signals。**
+
+## V4：能程序判断的先程序判断
+
+确定性检查：
 
 - 测试是否通过；
 - 是否修改目标文件；
 - 是否越权；
-- 是否超过步数；
-- JSON / Tool 参数是否合法。
+- 是否超过 max steps；
+- Tool 参数是否合法；
+- Resume 后 operation id 是否重复。
 
-先用程序解决能确定判断的部分。
-
-## V3：Rubric + Judge
-
-语义部分：
+开放语义再用 LLM Judge：
 
 - 修改是否真正符合需求；
 - 是否出现无关大改；
-- 变更说明是否准确。
+- 解释是否和 diff 一致。
 
-LLM Judge 输出每条标准的 Pass / Fail 和证据。
+**地图：Rubric → Judgment。**
 
-## V4：Trajectory Eval
+## V5：Metrics 不只看总成功率
 
-检查：
-
-- Tool 是否明显误用；
-- 是否重复读取同一文件；
-- 测试失败后是否改变策略；
-- 是否过早停止；
-- Subagent 是否回传过多 Context。
-
-## V5：Harness Failure Injection
-
-主动制造：
+Dashboard 至少按 Slice 看：
 
 ~~~text
-shell timeout
-process crash
-permission deny
-write-after-timeout
-budget exhausted
-approval rejected
+Task Success
+High-risk Failure Rate
+Tool Selection Error
+Repeat Action Rate
+Recovery Success
+Average Steps
+P95 Latency
+Average Cost
 ~~~
 
-检查 Harness 是否按预期控制和恢复。
+普通 Bug 和高风险权限 Case 分开看。
 
-## V6：建立 Baseline
+**地图：Metrics。**
 
-记录：
+## V6：所有失败必须归类
+
+某次失败：
+
+> 测试通过，但 Agent 修改了三个无关文件。
+
+不是简单记：
+
+~~~text
+score = 0
+~~~
+
+而是：
+
+~~~text
+Failure Type = Excessive Change Scope
+Layer = Agent / Decision
+Evidence = diff
+~~~
+
+**地图：Failure Taxonomy。**
+
+## V7：建立 Baseline
+
+固定：
 
 ~~~text
 agent_version = v1
@@ -101,72 +189,91 @@ toolset = tools-v3
 harness = harness-v2
 ~~~
 
-保存每个 Case 的 Trace 和结果。
+保存逐 Case 结果和 Trace。
 
-## V7：做一个真实改动
+以后任何版本必须和 Baseline 在同一条件下比较。
 
-例如：
+**地图：Regression。**
 
-> 加 Reflection，希望减少测试失败后的重复动作。
+## V8：验证一次“看起来合理”的优化
 
-候选版本跑同一套 Eval。
+现在增加 Reflection，希望减少测试失败后的重复动作。
 
-比较：
-
-- Task Success；
-- Repeat Action Rate；
-- Steps；
-- Cost；
-- Latency；
-- 各 Slice。
-
-可能出现：
+跑 Candidate：
 
 ~~~text
-成功率 +3%
-重复动作 -40%
-平均成本 +28%
-P95 时间 +35%
+成功率       +3%
+重复动作     -40%
+平均成本     +28%
+P95 延迟     +35%
+高风险错误    不变
 ~~~
 
-这时才有真正的工程决策。
+这时才出现真正的工程问题：
 
-## V8：上线后继续收失败
+> 质量提升值不值得 28% 的成本？
 
-线上发现：
+Eval 没替你做业务决策，但第一次让这个决策有证据。
+
+## V9：让 Production 继续出题
+
+上线后出现新问题：
 
 > 大型仓库中 Search Agent 会重复扫描同一目录。
 
-保存 Trace，建立 Failure Type：
+保存 Trace。
+
+归类：
 
 ~~~text
-Redundant Repository Scan
+Failure Type = Redundant Repository Scan
+Slice = Large Repo
+Layer = Agent / State
 ~~~
 
-加入 Eval Case。
+把它加入 Dataset。
 
-修复后永久进入 Regression。
+**地图：Production Feedback。**
+
+## V10：让失败真正变成能力
+
+修复：
+
+- Search State 记录已扫描目录；
+- 增加重复扫描检测；
+- 新增 Regression Case。
+
+以后每次 Agent、Model、Tool、Prompt 或 Harness 改动，这条 Case 都重新执行。
+
+**地图：Improvement Loop。**
 
 ## 最后的闭环
 
 ~~~text
-Production
+Target
 ↓
-Trace / Feedback
+Cases
 ↓
-Failure Taxonomy
+Rubric
 ↓
-New Eval Case
+Signals
+↓
+Metrics
+↓
+Failure
 ↓
 Engineering Change
 ↓
 Regression
 ↓
-Release
-↓
 Production
+↓
+New Failure
+└────────→ New Case
 ~~~
 
-到这里，Evaluation 不再是“测模型”。
+到这里，Evaluation 不再是“测一测 Agent”。
 
-它成为整个 AI 系统的学习机制。
+它开始承担更重要的职责：
+
+> **让整个系统能够从失败里积累，而不是每一代都重新踩坑。**

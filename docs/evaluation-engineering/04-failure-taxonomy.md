@@ -1,67 +1,133 @@
-# 04｜Failure Taxonomy：先让“效果不好”变成可修的问题
+# 04｜Failure Taxonomy：让失败知道自己该“回哪一层”
 
-“效果不好”不是工程描述。
+“效果不好”不是一个可用的工程描述。
 
-它无法统计，也无法路由到修复动作。
+它既不能统计，也不能告诉你下一步该改哪里。
 
-## 一个好 Failure Type 应该帮助决策
+Evaluation Engineering 需要给失败一个稳定的“地址”。
+
+## 第一层先按系统责任区分
+
+例如：
+
+### Prompt / Task Failure
+
+- 目标理解错；
+- 指令冲突；
+- Output Contract 不清。
+
+### Context Failure
+
+- Missing；
+- Noise；
+- Conflict；
+- Stale；
+- Wrong Retrieval。
+
+### Agent Failure
+
+- Wrong Tool；
+- Invalid Args；
+- Premature Stop；
+- Repeated Action；
+- Bad Planning。
+
+### Harness Failure
+
+- Permission Violation；
+- Retry Misclassification；
+- Timeout Handling；
+- Resume Duplicate Side Effect；
+- Budget Failure。
+
+### Evaluation Failure
+
+- Dataset Blind Spot；
+- Rubric Ambiguity；
+- Judge Error；
+- Metric Hides Critical Slice。
+
+这一级分类已经能回答：
+
+> 主要应该回哪一册修？
+
+## 第二层再按真实重复模式细分
+
+不要一开始设计几十个 Failure Type。
+
+例如开始只有：
+
+~~~text
+Tool Failure
+~~~
+
+真实 Trace 多了以后，才发现它应该拆成：
+
+~~~text
+Tool Failure
+├─ Wrong Tool
+├─ Invalid Args
+├─ Tool Timeout
+├─ Permission Denied
+└─ Result Misread
+~~~
+
+Taxonomy 应该被真实问题“长”出来，而不是先从术语表抄出来。
+
+## 好分类要能驱动动作
+
+一个 Failure Type 最好能回答：
+
+- 谁负责；
+- 去看什么 Signal；
+- 常见 Root Cause；
+- 修复手段；
+- 应该补什么 Regression Case。
 
 例如：
 
 ~~~text
-Context Missing
-Tool Selection Error
+Failure:
 Unsupported Claim
-Output Schema Error
-Premature Stop
-Retry Misclassification
-Permission Violation
+
+Owner Layer:
+Prompt / Context / Output
+
+Check:
+Evidence Context
+Citation
+Uncertainty Rule
+
+Regression:
+信息不足 + 诱导模型猜测的 Case
 ~~~
 
-看到名字，大致就知道该看哪一层。
+这样分类才真正有工程价值。
 
-## 分类不要一开始做得太细
+## 看失败分布，而不是只看成功率
 
-最初可以只有几类。
+假设整体成功率 94%。
 
-当某一类内部出现大量重复模式，再继续拆分。
-
-例如：
+剩下 6% 的失败里：
 
 ~~~text
-Tool Error
-↓
-Wrong Tool
-Invalid Args
-Timeout
-Permission
-Business Failure
+43% Context Missing
+25% Tool Selection
+12% Premature Stop
+8% Output Contract
+12% Other
 ~~~
 
-Taxonomy 应该跟着真实失败生长。
-
-## Failure Type 要稳定
-
-如果同一种错误今天叫“幻觉”，明天叫“事实错误”，统计就失去意义。
-
-团队需要统一定义和示例。
-
-## 一个重要用途：看失败分布
-
-假设 100 个失败：
-
-- 43% Context Missing；
-- 25% Tool Selection；
-- 12% Premature Stop；
-- 8% Format；
-- 其他 12%。
-
-这时最值得优化的方向已经很清楚。
-
-不是“换个更强模型”，而是先修 Context Pipeline。
+这张分布比一句“模型准确率 94%”更能决定下一步投入。
 
 ## 地图坐标
 
-Failure Taxonomy 是 Eval 到 Engineering Action 之间的路由器。
+Failure Taxonomy 位于“测量”和“改进”之间。
 
-没有分类，评测结果很难变成系统改进。
+它把 Eval 从：
+
+> 发现系统不好
+
+推进到：
+
+> **知道它坏在哪一层、下一步应该修什么。**
