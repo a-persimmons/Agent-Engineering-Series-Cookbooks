@@ -1,6 +1,6 @@
-# 03｜不要只评最终答案：AI 系统有多层 Eval
+# 03｜先决定“评哪一层”
 
-前四册已经形成四层系统：
+一个复杂 AI 系统可能同时包含：
 
 ~~~text
 Prompt
@@ -9,30 +9,41 @@ Agent Loop
 Harness
 ~~~
 
-Evaluation 也应该分层。
+最终结果错了，不代表每次都应该改 Prompt。
 
-## Output Eval
+所以做 Eval 前，先问：
 
-最终结果是否正确、完整、合规。
+> **我现在评的是哪一层？**
 
-适合大多数 LLM 任务。
+## Output Layer
 
-## Context Eval
+看最终交付是否正确、完整、合规。
 
-模型是否拿到了需要的信息，有没有噪声、过期和冲突。
+这是最常见的 Eval。
 
-## Trajectory Eval
+## Context Layer
 
-Agent 是否走了合理路径：
+看模型有没有拿到完成任务所需的信息。
 
-- Tool 选对了吗；
-- 是否重复动作；
-- Plan 是否更新；
-- State 是否一致。
+关注 Missing、Noise、Conflict、Stale 等问题。
 
-## Harness Eval
+## Trajectory Layer
 
-坏情况下系统是否受控：
+看 Agent 的执行路径。
+
+例如：
+
+- Tool 选择；
+- 参数；
+- State 更新；
+- 是否重复；
+- 是否过早停止。
+
+## Harness Layer
+
+看坏情况下系统是否仍受控。
+
+例如：
 
 - 越权；
 - Timeout；
@@ -41,27 +52,33 @@ Agent 是否走了合理路径：
 - Idempotency；
 - Budget。
 
-## Production Eval
+## Production Layer
 
-真实用户和环境里：
+看真实用户和真实环境下的表现：
 
 - 成功率；
 - 延迟；
 - 成本；
 - 人工介入；
-- 失败分布；
-- 用户修正。
+- 失败分布。
 
-## 分层的价值
+## 为什么先分层
 
-最终答案错了，不代表应该改 Prompt。
+同一个最终错误：
 
-可能是 Retrieval 漏了证据，也可能 Tool 返回错误，还可能 Resume 重复 Action。
+> “回答用了旧价格”
 
-只有分层 Evaluation，才能把失败路由到正确工程层。
+可能来自：
 
-## 地图坐标
+- Context 选错版本；
+- Agent 调错 Tool；
+- Cache 没失效；
+- Judge 没发现。
 
-Signals 必须覆盖系统真正的运行层。
+只有先确定责任层，Eval 结果才容易路由到修复动作。
 
-只保存最终答案，就只能做最表面的 Eval。
+后面章节会分别深入 Agent、Tool、Context 和 Harness Eval。
+
+这里先留下一个习惯：
+
+> **不要只问系统得几分，先问哪一层坏了。**

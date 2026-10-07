@@ -1,29 +1,29 @@
-# 12｜LLM-as-Judge：它是测量工具，不是答案
+# 12｜LLM-as-Judge：先校准测量工具，再相信分数
 
 LLM Judge 很方便。
 
-给它输出和 Rubric，它就能自动评大量案例。
+给它结果和 Rubric，就能自动评大量案例。
 
-也正因为方便，很容易被过度信任。
+问题也恰恰在这里：因为自动化太容易，人很容易跳过“这个 Judge 到底准不准”。
 
-## Judge 也会错
+## Judge 不是 Oracle
 
-它可能受：
+它会受：
 
-- 输出长度；
 - 文风；
-- 顺序；
-- 自己的模型偏好；
+- 长度；
 - Prompt；
+- 自己的模型偏好；
 - 参考答案质量；
+- Rubric 含糊程度；
 
 影响。
 
-所以 Judge 也需要被校准。
+所以 Judge 本身也要经过 Evaluation。
 
-## 先让 Judge 给“证据”，再给判断
+## 先要求证据，再要求判断
 
-不要只输出：
+不要只返回：
 
 ~~~text
 score = 4
@@ -34,42 +34,47 @@ score = 4
 ~~~text
 criterion = evidence_support
 result = fail
-evidence = "结论 X 在输入中没有对应来源"
+evidence = "结论 X 没有输入来源支持"
 ~~~
 
-这样才能抽查 Judge 是否合理。
+这样人工抽查时可以看到它依据什么。
 
-## 用人工样本校准
+## 用人工校准集测 Judge
 
-准备一小组人工已确认结果。
+准备一批已经人工确认的 Case。
 
-比较 Judge：
+检查：
 
-- precision；
-- recall；
 - agreement；
-- 哪类标准最容易误判。
+- precision / recall；
+- 哪类 Rubric 最容易误判；
+- 哪些 Case 置信最低。
 
-Judge 不需要完美，但你要知道它在哪些地方不可靠。
+Judge 不需要完美。
 
-## 避免评价泄漏
+你需要知道它的误差边界。
 
-如果 Judge 知道：
+## Judge 配置也要版本化
 
-> 这是新版本输出。
+更换：
 
-它可能出现偏见。
+- Judge Model；
+- Judge Prompt；
+- Rubric；
+- Reference；
 
-Pairwise 时也可以随机左右顺序。
+都可能改变分数。
 
-## Judge 模型也要版本化
+因此历史趋势必须同时记录 Evaluation Stack 的版本。
 
-更换 Judge 后，历史分数可能不可直接比较。
+## 能程序判断的部分不要交给 Judge
 
-所以 Evaluation Stack 自己也需要版本管理。
+Schema、Tool 名称、权限、数值边界等，优先确定性检查。
+
+Judge 更适合补充语义判断。
 
 ## 地图坐标
 
-LLM-as-Judge 位于 **Rubric → Signals / Judgment**。
+LLM-as-Judge 是 **Rubric 的执行器之一**。
 
-它不是评价体系本身，只是执行评价规则的一种工具。
+它不是 Evaluation Engineering 的中心；它本身也是需要被校准的测量仪器。

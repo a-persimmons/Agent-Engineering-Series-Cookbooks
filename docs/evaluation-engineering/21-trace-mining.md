@@ -1,63 +1,80 @@
-# 21｜Trace Mining：真实失败是最有价值的教材
+# 21｜Trace Mining：从很多“个案”里找出同一个系统问题
 
-Agent Trace 不只是用来查单次事故。
+一条失败 Trace 适合 Debug。
 
-积累以后，它可以告诉你系统反复在哪里浪费时间和犯错。
+几百条 Trace 放在一起，价值会改变。
 
-## 可以从 Trace 里找什么
+它们开始回答：
 
-- 高频失败 Tool；
-- 重复 Action；
-- 长循环；
-- 常见 Retry；
-- Premature Stop；
-- 高频人工审批；
-- Context 膨胀点；
-- 高成本任务模式。
+> 系统是不是反复在同一个地方犯错？
 
-## 从单次事故到模式
+## 可以寻找哪些模式
 
-一条 Trace：
+例如：
 
-> 这个任务第 8 步选错 Tool。
+- 两个 Tool 之间频繁误选；
+- 同一文件被重复读取；
+- 某类任务平均多出十步；
+- 某个 Timeout 总触发错误 Retry；
+- 一类 Context 在 Compaction 后经常丢失；
+- 某种 Action 总需要人工审批。
 
-一百条 Trace：
+这些不是个案，而是结构性信号。
 
-> 32% 的查询类任务都会在两个相似 Tool 之间误选。
+## 从 Event 到 Cluster
 
-后者才真正值得系统性修复。
+可以先把 Trace 转成特征：
 
-可能的修法：
+~~~text
+failure_type
+tool_sequence
+error_code
+step_count
+task_slice
+model_version
+context_size
+~~~
 
-- 合并 Tool；
-- 重写描述；
-- Routing；
-- 增加 Context；
-- 调整权限。
+再做聚类或统计。
 
-## Cluster Failure
+模型也可以帮助归纳候选 Pattern，但最后仍需要工程判断。
 
-可以对失败原因、Error Message、Trajectory Pattern 做聚类。
+## Pattern 要回到 Failure Taxonomy
 
-再由人检查：
+例如发现：
 
-> 这些是不是同一个 Failure Type？
+> 两个搜索 Tool 导致 32% 的任务出现错误选择。
 
-这比随机抽样更容易发现系统性问题。
+这可以新增或细化：
 
-## Trace 要能关联版本
+~~~text
+Tool Selection
+└─ Ambiguous Tool Boundary
+~~~
 
-否则不知道：
+然后进入：
 
-- 哪个模型；
-- 哪个 Prompt；
-- 哪个 Tool Schema；
-- 哪个 Harness 配置；
+- Tool Design 修复；
+- 新 Eval Case；
+- Regression。
 
-产生了这条轨迹。
+## Trace 必须能关联版本
+
+否则很难回答：
+
+> 这个问题是新模型出现的，还是新 Tool Schema 出现的？
+
+至少关联：
+
+- Agent；
+- Model；
+- Prompt；
+- Toolset；
+- Harness；
+- Dataset / Environment。
 
 ## 地图坐标
 
-Trace Mining 把 Observability 数据变成新的 Cases 和 Failure Taxonomy。
+Production Feedback 给你新的原始 Signal。
 
-它是 Production Feedback 进入 Improvement Loop 的关键步骤。
+Trace Mining 把这些 Signal 聚成可修的 Failure Pattern。
