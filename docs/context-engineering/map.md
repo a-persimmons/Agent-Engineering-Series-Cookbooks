@@ -14,31 +14,9 @@ Context Engineering 可以压缩成七个问题：
 
 </div>
 
-把它画成运行时链路：
+先把七个问题放在一张图里：
 
-~~~
-Task / State
-    ↓
-   Need
-    ↓
- Sources
-    ↓
- Select
-    ↓
- Shape
-    ↓
- Budget
-    ↓
- Runtime Context
-    ↓
-   Model
-    ↓
- Outcome / Tool Result
-    ↓
- Lifecycle Update
-    ↓
- Evaluation
-~~~
+![Context Engineering 核心地图](/diagrams/context/core-map.svg)
 
 ## 这张地图有两种走法
 
