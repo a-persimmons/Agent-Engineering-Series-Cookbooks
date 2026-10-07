@@ -6,6 +6,8 @@
 
 这个直觉在短任务里看不出问题。任务一长，它就会失效。
 
+![Context Window、Runtime Context 与 Memory 的区别](/diagrams/context/window-memory.svg)
+
 Context Window 说的是：**一次推理最多能让模型看到多少内容。**
 
 Memory 说的是：**哪些信息值得跨时间保存，以及以后什么时候把它重新带回来。**
