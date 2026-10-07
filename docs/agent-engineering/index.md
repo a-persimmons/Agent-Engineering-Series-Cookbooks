@@ -6,6 +6,8 @@
 
 先记住一条最小循环：
 
+![Agent Engineering 最小 Loop](/diagrams/agent/core-loop.svg)
+
 **Goal → Context → Decision → Action → Observation → State → Feedback → Next Loop**
 
 ReAct、Planning、Reflection、Workflow、Subagent、Multi-Agent，都会从这条 Loop 上长出来。
