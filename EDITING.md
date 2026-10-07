@@ -77,3 +77,12 @@
 - Agent Eval 同时看 Outcome 与 Trajectory；Harness Eval 要主动做 Failure Injection。
 - 每个真实失败最终应尽量进入 Failure Taxonomy、Regression Set 或系统机制。
 - 系列终章必须把五册收束为一张从 Human Intent 到 Improvement Loop 的总图。
+
+
+## 第三册终审补充
+
+- Agent 层描述行为策略；Harness 层负责把权限、超时、预算、幂等、恢复等变成运行保证。
+- Action 章节必须描述副作用语义，但不能把 Permission / Sandbox 的实现责任吞进 Agent 层。
+- Error Recovery 在第三册讨论“失败后下一步策略”，第四册讨论“运行时怎样安全重试、对账与恢复”。
+- Stop 同时包含语义停止条件与硬边界；硬边界必须由 Harness 强制。
+- Agent Eval 重点看 Outcome + Trajectory；系统可靠性指标在后两册展开。
