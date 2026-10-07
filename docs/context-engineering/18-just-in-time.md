@@ -10,6 +10,8 @@
 
 这就是 Just-in-time Context。
 
+![Just-in-time Context 的动态装配](/diagrams/context/just-in-time.svg)
+
 ## Tool 也是一种“取信息”的动作
 
 我们通常把工具调用理解成 Agent 在“做事”。
