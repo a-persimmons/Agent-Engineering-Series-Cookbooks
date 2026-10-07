@@ -95,3 +95,11 @@
 - 重要发布决策要考虑 repeated trials、随机波动、Slice 与置信度，而不是只看单次平均分。
 - Capability Eval 用来爬能力上限，Regression Eval 用来保护已经拥有的能力，两者目标不同。
 - Production Signal 也有盲区和偏差，不能自动当作 Ground Truth。
+
+
+## 第三至第五册视觉审查
+
+- 第三册 Agent：只在最小 Loop、Workflow vs Agent、ReAct/Planning、Reflection、Tool Boundary、Subagent/Multi-Agent、进入 Harness 等高结构密度页面补图。
+- 第四册 Harness：只在 Control Plane、边界三层、Timeout/Retry/Reconcile、Persistence/Resume、Recovery、Observability/Audit、Long-running、进入 Evaluation 等页面补图。
+- 第五册 Evaluation：只在核心闭环、多层 Eval、Cases/Slices、Grader Stack、Outcome/Trajectory、Capability/Regression、Improvement Loop 与系列终章补图。
+- 页面如果主要依赖案例、规则或代码片段表达，且图不能显著降低认知负担，则不加图。视觉密度不追求平均分布。
