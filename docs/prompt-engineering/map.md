@@ -13,29 +13,9 @@ Prompt Engineering 可以先压缩成六个问题：
 
 </div>
 
-把它画成一条链：
+真正要记住的不是一条死板流程，而是同一张地图的两种走法：
 
-~~~
-需求
- ↓
-Goal
- ↓
-Context
- ↓
-Process
- ↓
-Output
- ↓
-Constraints
- ↓
-Evaluation
- ↓
-Failure
- ↓
-Diagnosis
- ↓
-Revision
-~~~
+![Prompt 设计与调试双向地图](/diagrams/prompt/design-debug.svg)
 
 这张图有两个用处。
 
