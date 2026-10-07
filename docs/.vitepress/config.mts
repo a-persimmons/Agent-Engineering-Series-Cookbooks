@@ -11,8 +11,8 @@ export default defineConfig({
     logo: '🧭',
     nav: [
       { text: '系列首页', link: '/' },
-      { text: '第一本：Prompt Engineering', link: '/prompt-engineering/' },
-      { text: '核心地图', link: '/prompt-engineering/map' },
+      { text: '第一本：Prompt', link: '/prompt-engineering/' },
+      { text: '第二本：Context', link: '/context-engineering/' },
       { text: 'GitHub', link: 'https://github.com/a-persimmons/Agent-Engineering-Series-Cookbooks' }
     ],
     sidebar: {
@@ -59,6 +59,52 @@ export default defineConfig({
         ]},
         { text: '附录', items: [
           { text: 'Prompt 设计与评审清单', link: '/prompt-engineering/checklist' }
+        ]}
+      ],
+      '/context-engineering/': [
+        { text: '开始之前', items: [
+          { text: '这本书要解决什么', link: '/context-engineering/' },
+          { text: '先记住这一张地图', link: '/context-engineering/map' }
+        ]},
+        { text: '第一部｜重新理解 Context', items: [
+          { text: '01 不是“更长的 Prompt”', link: '/context-engineering/01-not-longer-prompt' },
+          { text: '02 Context Window 不是 Memory', link: '/context-engineering/02-window-is-not-memory' },
+          { text: '03 Context 为什么会失效', link: '/context-engineering/03-why-context-fails' }
+        ]},
+        { text: '第二部｜Context 从哪里来', items: [
+          { text: '04 Instructions', link: '/context-engineering/04-instructions' },
+          { text: '05 Conversation History', link: '/context-engineering/05-history' },
+          { text: '06 Task State', link: '/context-engineering/06-task-state' },
+          { text: '07 Retrieval', link: '/context-engineering/07-retrieval' },
+          { text: '08 Tool Result', link: '/context-engineering/08-tools-environment' },
+          { text: '09 Long-term Memory', link: '/context-engineering/09-memory' }
+        ]},
+        { text: '第三部｜六个关键操作', items: [
+          { text: '10 Selection', link: '/context-engineering/10-selection' },
+          { text: '11 Order：显著性与位置', link: '/context-engineering/11-order-salience' },
+          { text: '12 Shape：形态与来源', link: '/context-engineering/12-shape-provenance' },
+          { text: '13 Budget：压缩与注意力', link: '/context-engineering/13-budget-compaction' },
+          { text: '14 Lifecycle', link: '/context-engineering/14-lifecycle' },
+          { text: '15 Isolation', link: '/context-engineering/15-isolation' }
+        ]},
+        { text: '第四部｜把常见技术放回地图', items: [
+          { text: '16 RAG 是 Context Pipeline', link: '/context-engineering/16-rag-pipeline' },
+          { text: '17 Memory 是写入、选择与遗忘', link: '/context-engineering/17-memory-system' },
+          { text: '18 Just-in-time Context', link: '/context-engineering/18-just-in-time' },
+          { text: '19 Long-running Tasks', link: '/context-engineering/19-long-running' }
+        ]},
+        { text: '第五部｜真正的工程：调试与评测', items: [
+          { text: '20 Context Debugging', link: '/context-engineering/20-debugging' },
+          { text: '21 Observability', link: '/context-engineering/21-observability' },
+          { text: '22 Evaluation', link: '/context-engineering/22-evaluation' }
+        ]},
+        { text: '第六部｜把地图用起来', items: [
+          { text: '23 超长日志根因分析', link: '/context-engineering/23-case-study' },
+          { text: '24 下一站：Agent Engineering', link: '/context-engineering/24-next' }
+        ]},
+        { text: '附录', items: [
+          { text: 'Context 设计与评审清单', link: '/context-engineering/checklist' },
+          { text: '延伸阅读', link: '/context-engineering/references' }
         ]}
       ]
     },

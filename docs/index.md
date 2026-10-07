@@ -7,17 +7,17 @@ hero:
   tagline: "从 Prompt Engineering 开始，逐步进入 Context、Agent、Harness 与 Evaluation。不是术语合集，而是一套能用来设计、诊断和交付 AI 系统的心智模型。"
   actions:
     - theme: brand
-      text: 开始第一本
+      text: 第一本：Prompt Engineering
       link: /prompt-engineering/
     - theme: alt
-      text: 先看核心地图
-      link: /prompt-engineering/map
+      text: 第二本：Context Engineering
+      link: /context-engineering/
 
 features:
   - title: Prompt Engineering
-    details: 控制一次模型调用的目标、信息、过程、输出、边界与评价。
+    details: 控制一次模型调用的目标、信息、过程、输出、边界与评价。已完成。
   - title: Context Engineering
-    details: 从“提示词怎么写”走向“这一轮模型究竟应该看到什么”。
+    details: 控制每一轮模型看到的世界：选择、组织、压缩、记忆与生命周期。已完成初版。
   - title: Agent Engineering
     details: 把单次调用扩展为持续决策、行动、观察与状态更新。
   - title: Harness Engineering
@@ -32,6 +32,8 @@ AI 工程里最危险的学习方式，是先收藏一百个名词，再努力�
 
 Few-shot、CoT、ReAct、RAG、Memory、MCP、Reflection、Agent、Harness……单独看都不难。真正困难的是：**它们为什么出现，解决哪类问题，彼此之间是什么关系。**
 
-这个系列从最底层的问题出发。每一本书都先建立树干，再把技巧挂回树上。
+这个系列从底层问题出发。每一本书都先建立树干，再把新技术挂回树上。
 
-第一本从 Prompt Engineering 开始。
+第一本回答：**怎样设计一次模型行为？**
+
+第二本继续回答：**在模型做决定前，怎样控制它看到的世界？**

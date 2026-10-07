@@ -6,9 +6,9 @@
 
 ## 系列规划
 
-1. **Prompt Engineering：从需求到可控行为**（第一本，已开始）
-2. **Context Engineering：控制模型看到的世界**（规划中）
-3. **Agent Engineering：让模型持续决策与行动**（规划中）
+1. **Prompt Engineering：从需求到可控行为**（已完成初版）
+2. **Context Engineering：控制模型看到的世界**（已完成初版）
+3. **Agent Engineering：让模型持续决策与行动**（下一本）
 4. **Harness Engineering：让 Agent 可靠运行**（规划中）
 5. **Evaluation Engineering：让系统可验证、可回归**（规划中）
 
