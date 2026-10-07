@@ -21,6 +21,9 @@ hero:
     - theme: alt
       text: 第五本：Evaluation
       link: /evaluation-engineering/
+    - theme: alt
+      text: 全系列总地图
+      link: /series-map
 
 features:
   - title: Prompt Engineering
@@ -30,9 +33,9 @@ features:
   - title: Agent Engineering
     details: 从最小 Loop 出发，理解 ReAct、Planning、Reflection、Tool、State 与 Multi-Agent。已完成初版。
   - title: Harness Engineering
-    details: 用权限、沙箱、恢复、持久化和可观测性把 Agent Loop 变成可靠软件。已完成初版。
+    details: 用权限、沙箱、恢复、持久化和可观测性把 Agent Loop 变成可靠软件。已完成。
   - title: Evaluation Engineering
-    details: 从 Target、Dataset、Rubric 到 Regression 与 Production Feedback，让系统可验证、可回归。已完成初版。
+    details: 从 Target、Dataset、Rubric 到 Regression 与 Production Feedback，让系统可验证、可回归。已完成。
 ---
 
 ## 为什么做这个系列
