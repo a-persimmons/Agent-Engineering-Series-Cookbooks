@@ -8,6 +8,12 @@ Agent 系统最危险的一类问题，不是 Action 失败。
 
 付款、发消息、创建资源都可能遇到。
 
+## 不要先追求“Exactly Once”
+
+分布式系统里，很难只靠客户端保证一个外部副作用“恰好执行一次”。网络超时、进程崩溃和重放都会打破这种幻想。
+
+更实际的目标是：**允许请求被重放，但同一个业务 operation 不产生第二次效果。** 这就是为什么 idempotency key、operation journal 和 reconcile 如此重要。
+
 ## 什么是 Idempotent Action
 
 同一个操作重复执行，最终状态仍然一样。
@@ -63,4 +69,4 @@ Agent 天然有：
 
 Idempotency 位于 **Recovery + Persistence + Action Safety**。
 
-它让“可以重试、可以恢复”不会自动变成“可能重复副作用”。
+它让“可以重试、可以恢复”不会自动变成“可能重复副作用”。对于无法天然幂等的动作，则至少需要唯一 operation id、结果查询和补偿路径。
