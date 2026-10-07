@@ -2,6 +2,8 @@
 
 AI 系统修改很容易出现局部提升、整体退化。
 
+![Capability Eval 与 Regression Eval](/diagrams/evaluation/capability-regression.svg)
+
 修了格式。
 
 事实准确率掉了。
