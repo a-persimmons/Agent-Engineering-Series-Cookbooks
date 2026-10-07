@@ -10,6 +10,9 @@ Checkpoint 处理的是一个非常具体的问题：
 
 > **哪些时刻值得保存一份“从这里可以继续”的状态快照？**
 
+
+![Checkpoint、Persistence 与 Resume](/diagrams/harness/persistence-resume.svg)
+
 ## Checkpoint 保存的是恢复入口
 
 通常包括：
