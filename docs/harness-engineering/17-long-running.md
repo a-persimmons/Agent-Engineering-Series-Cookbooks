@@ -4,6 +4,8 @@
 
 真实工作并不一定。
 
+![Long-running Task 的阶段化运行](/diagrams/harness/long-running.svg)
+
 代码迁移、深度研究、数据清理、批量文档处理，可能持续几十分钟、几小时，甚至跨天。
 
 ## 长任务会放大所有问题
