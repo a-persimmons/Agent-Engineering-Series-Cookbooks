@@ -6,6 +6,8 @@ Eval Dataset 最容易出现的问题是“太干净”。
 
 真实用户不是这样。
 
+![Case Types 与 Slices](/diagrams/evaluation/cases-slices.svg)
+
 ## Dataset 应该覆盖任务分布
 
 至少考虑：
