@@ -8,6 +8,8 @@
 
 这本书只保留一条主线：
 
+![Prompt Engineering 六问总地图](/diagrams/prompt/core-map.svg)
+
 **Goal → Context → Process → Output → Constraints → Evaluation**
 
 以后遇到任何新技巧，先问它在这条链上解决什么问题。找不到位置的知识，先不要背。
