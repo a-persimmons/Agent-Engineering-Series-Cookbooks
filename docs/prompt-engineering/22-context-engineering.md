@@ -10,6 +10,8 @@ Context Engineering 进一步问：
 
 两者不是替代关系，而是尺度变化。
 
+![从 Prompt Engineering 到更大尺度的 AI Engineering](/diagrams/prompt/transition.svg)
+
 ## 从静态文本到动态装配
 
 一个真实 Agent 的 Context 可能来自：
