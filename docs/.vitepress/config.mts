@@ -13,6 +13,7 @@ export default defineConfig({
       { text: '系列首页', link: '/' },
       { text: '第一本：Prompt', link: '/prompt-engineering/' },
       { text: '第二本：Context', link: '/context-engineering/' },
+      { text: '第三本：Agent', link: '/agent-engineering/' },
       { text: 'GitHub', link: 'https://github.com/a-persimmons/Agent-Engineering-Series-Cookbooks' }
     ],
     sidebar: {
@@ -105,6 +106,52 @@ export default defineConfig({
         { text: '附录', items: [
           { text: 'Context 设计与评审清单', link: '/context-engineering/checklist' },
           { text: '延伸阅读', link: '/context-engineering/references' }
+        ]}
+      ],
+      '/agent-engineering/': [
+        { text: '开始之前', items: [
+          { text: '这本书要解决什么', link: '/agent-engineering/' },
+          { text: '先记住这一条 Loop', link: '/agent-engineering/map' }
+        ]},
+        { text: '第一部｜Agent 从哪里开始', items: [
+          { text: '01 Model 不是 Agent', link: '/agent-engineering/01-model-is-not-agent' },
+          { text: '02 Agent 从 Loop 开始', link: '/agent-engineering/02-minimal-loop' },
+          { text: '03 Workflow 还是 Agent', link: '/agent-engineering/03-workflow-vs-agent' },
+          { text: '04 Agent 为什么会失败', link: '/agent-engineering/04-agent-failures' }
+        ]},
+        { text: '第二部｜最小 Loop 的原语', items: [
+          { text: '05 Goal', link: '/agent-engineering/05-goal' },
+          { text: '06 Context', link: '/agent-engineering/06-context' },
+          { text: '07 Decision', link: '/agent-engineering/07-decision' },
+          { text: '08 Action', link: '/agent-engineering/08-action' },
+          { text: '09 Observation', link: '/agent-engineering/09-observation' },
+          { text: '10 State', link: '/agent-engineering/10-state' },
+          { text: '11 Feedback', link: '/agent-engineering/11-feedback' },
+          { text: '12 Stop', link: '/agent-engineering/12-stopping' }
+        ]},
+        { text: '第三部｜设计模式从 Loop 长出来', items: [
+          { text: '13 ReAct', link: '/agent-engineering/13-react' },
+          { text: '14 Planning', link: '/agent-engineering/14-planning' },
+          { text: '15 Reflection', link: '/agent-engineering/15-reflection' },
+          { text: '16 Routing 与 Parallel', link: '/agent-engineering/16-routing-parallel' },
+          { text: '17 Human-in-the-loop', link: '/agent-engineering/17-human-in-loop' }
+        ]},
+        { text: '第四部｜从 Demo 到系统', items: [
+          { text: '18 Tool Design 与 MCP', link: '/agent-engineering/18-tool-design-mcp' },
+          { text: '19 Error Recovery', link: '/agent-engineering/19-error-recovery' },
+          { text: '20 Subagent', link: '/agent-engineering/20-subagent' },
+          { text: '21 Multi-Agent', link: '/agent-engineering/21-multi-agent' }
+        ]},
+        { text: '第五部｜调试与评测', items: [
+          { text: '22 Tracing 与 Evals', link: '/agent-engineering/22-tracing-evals' }
+        ]},
+        { text: '第六部｜把 Loop 跑起来', items: [
+          { text: '23 Mini Coding Agent', link: '/agent-engineering/23-case-study' },
+          { text: '24 下一站：Harness Engineering', link: '/agent-engineering/24-next' }
+        ]},
+        { text: '附录', items: [
+          { text: 'Agent 设计与评审清单', link: '/agent-engineering/checklist' },
+          { text: '延伸阅读', link: '/agent-engineering/references' }
         ]}
       ]
     },
