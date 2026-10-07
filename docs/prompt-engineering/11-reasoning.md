@@ -4,6 +4,8 @@
 
 这时才值得讨论推理过程。
 
+![Reasoning 的可检查中间结构](/diagrams/prompt/reasoning-structure.svg)
+
 ## 不要把“step by step”当成万能开关
 
 给任何任务都加一句“请一步一步思考”，并不会自动提升质量。
