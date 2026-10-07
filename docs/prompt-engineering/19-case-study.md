@@ -6,6 +6,10 @@
 
 > 帮我分析这段线上异常日志。
 
+先看完整演化，再逐层拆开：
+
+![一个 Prompt 从 V0 到 V6 的演化](/diagrams/prompt/evolution.svg)
+
 ## V0：一句话
 
 问题很快出现：
