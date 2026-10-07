@@ -1,60 +1,78 @@
-# 18｜Just-in-time Context：需要时再拿
+# 18｜Just-in-time Context：需要的时候再拿
 
-Context Engineering 一个非常实用的方向是：
+有些信息必须长期放在模型眼前。
 
-> 不把未来可能用到的信息提前装进窗口，而是在真正需要时获取。
+更多信息其实不必。
+
+一个 Coding Agent 不需要开工前读完整个仓库。它可以先看目录，遇到某个符号时再搜索，准备修改时再打开文件，修改后再运行测试。
+
+信息随着任务推进逐步出现。
 
 这就是 Just-in-time Context。
 
-## 为什么它比“预加载一切”更自然
+## Tool 也是一种“取信息”的动作
 
-一个 Coding Agent 不需要一开始就读完整个仓库。
+我们通常把工具调用理解成 Agent 在“做事”。
 
-它可以先：
+从 Context 视角看，它还有另一层意义：
 
-- 看目录；
-- 搜索相关符号；
-- 打开需要的文件；
-- 运行测试；
-- 根据结果继续读取。
+> Agent 发现当前信息不够，于是主动为下一步决策补充 Context。
 
-信息随着任务推进逐步进入 Context。
+搜索、数据库查询、文件读取、Web 请求，都可以这样理解。
 
-## Tool 是获取 Context 的动作
+这会把 Context Engineering 和 Agent Loop 连起来：
 
-搜索、数据库查询、文件读取、Web 请求，本质上都可以理解成：
+~~~text
+当前 Context
+↓
+发现缺口
+↓
+调用 Tool
+↓
+得到新信息
+↓
+下一轮 Context
+~~~
 
-> Agent 主动为下一步决策补充 Context。
+## MCP 应该放在什么位置
 
-这也是 Tool Use 和 Context Engineering 的交叉点。
-
-## MCP 放在哪里理解
-
-MCP 提供了标准化的 Tools、Resources、Prompts 等原语。
+MCP 提供了 Tools、Resources、Prompts 等标准化原语。
 
 从 Context 视角看：
 
-- **Resources** 提供应用管理的上下文资源；
-- **Tools** 允许模型按需获取信息或采取行动；
-- **Prompts** 提供可复用交互模板。
+- Resources 可以提供应用管理的资料；
+- Tools 可以让模型按需获取信息或执行动作；
+- Prompts 可以提供可复用的交互模板。
 
-协议本身不是 Context 策略。
+但协议不会替你决定：
 
-真正的策略仍然是：什么时候获取什么、结果怎样进入 Context、保留多久。
+- 什么时候应该读取资源；
+- 一次读取多少；
+- 工具结果保留多久；
+- 哪些内容应该进入长期 Memory。
 
-## Just-in-time 的代价
+这些仍然是 Context Strategy。
 
-按需获取也有成本：
+## 按需获取也有代价
 
-- 工具调用延迟；
-- 外部系统可能失败；
-- 结果可能不稳定；
-- Agent 需要知道什么时候该查。
+Just-in-time 不是“永远更好”。
 
-所以关键不是“全部提前加载”与“全部实时获取”二选一，而是把信息按生命周期分层。
+每次实时获取都会增加：
+
+- 延迟；
+- 外部依赖；
+- 失败概率；
+- 调用成本。
+
+所以最终需要的是分层：
+
+- 少量稳定规则长期驻留；
+- 当前 State 持续维护；
+- 大量事实按需获取；
+- 原始历史与工具结果随时退出工作集。
 
 ## 地图坐标
 
-Just-in-time Context 把 **Need → Source → Select** 连接成动态过程。
+Just-in-time Context 把 **Need → Source → Select** 变成动态过程。
 
-从这里开始，Context Engineering 已经明显进入 Agent Loop。
+从这里开始，Context 不再只是模型调用前的准备工作，它已经进入执行循环。
