@@ -46,12 +46,12 @@ Goal
 
 ~~~
 Goal
-+ Context
-+ Examples
++ Context（含 Examples）
 + Output
++ Evaluation
 ~~~
 
-“好”的定义更主观，所以 Examples 与 Rubric 会更关键。
+“好”的定义更主观，所以 Context 里的 Examples 与 Evaluation 里的 Rubric 会更关键。
 
 可以给两篇“这就是我要的感觉”的样本，再把真正重要的编辑标准写清楚。
 
