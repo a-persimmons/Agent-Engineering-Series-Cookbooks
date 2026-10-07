@@ -6,14 +6,16 @@
 
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
 - [OpenAI Cookbook — Context Engineering: Short-Term Memory Management with Sessions](https://developers.openai.com/cookbook/examples/agents_sdk/session_memory)
-- [OpenAI — API deployment checklist](https://developers.openai.com/api/docs/guides/deployment-checklist)
+- [OpenAI Cookbook — Building Reliable Agents with Memory and Compaction](https://developers.openai.com/cookbook/examples/agents_sdk/building_reliable_agents_memory_compaction)
+- [OpenAI Agents SDK — Sessions](https://openai.github.io/openai-agents-js/guides/sessions/)
 
 阅读时重点观察：这些资料怎样处理 selection、compression、state 和 long-running context，而不是抄实现细节。
 
 ## State / Persistence / Memory
 
-- [LangGraph — Persistence](https://langchain-ai.github.io/langgraphjs/how-tos/persistence-postgres/)
-- OpenAI Agents SDK / Responses API 关于 conversation state、sessions 与 compaction 的官方文档
+- [LangGraph — Thinking in LangGraph](https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph)
+- [LangChain Learn — Memory / Context Engineering](https://docs.langchain.com/oss/python/learn)
+- OpenAI Agents SDK 关于 conversation state、sessions、memory 与 compaction 的官方文档
 
 重点区分：Conversation History、Checkpoint、Store、Long-term Memory 分别负责什么。
 
