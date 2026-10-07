@@ -8,6 +8,8 @@ Agent 做错事时，第一反应经常是：
 
 Context Debugging 最重要的不是多一套术语，而是养成固定回溯顺序。
 
+![Context Debugging 逆向诊断图](/diagrams/context/debugging.svg)
+
 ## 从最终错误开始
 
 假设 Agent 用了一个已经失效的配置。
