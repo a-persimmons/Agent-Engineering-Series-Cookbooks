@@ -47,6 +47,8 @@ Timeout、Crash、Retry、恢复成功率。
 
 小样本早期迭代可以简单，但越接近发布决策，越不能把一次采样当成稳定能力。
 
+![Capability Eval 与 Regression Eval 的不同目标](/diagrams/evaluation/capability-regression.svg)
+
 ## 指标之间存在 Trade-off
 
 例如：
