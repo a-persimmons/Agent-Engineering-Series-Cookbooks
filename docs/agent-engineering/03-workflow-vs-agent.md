@@ -10,6 +10,8 @@
 
 这个问题往往已经能把大部分场景分开。
 
+![Workflow 与 Agent 的控制权差异](/diagrams/agent/workflow-agent.svg)
+
 ## 能提前写清楚的，先做 Workflow
 
 例如发票处理：
