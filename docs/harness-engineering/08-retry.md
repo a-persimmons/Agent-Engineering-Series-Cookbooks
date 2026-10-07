@@ -12,6 +12,9 @@ Retry 真正适合的是一类很窄的问题：
 
 > **动作本身仍然正确，只是这一次执行条件暂时不好。**
 
+
+![Timeout、Retry 与 Reconcile](/diagrams/harness/retry-reconcile.svg)
+
 ## 什么时候适合 Retry
 
 例如：
