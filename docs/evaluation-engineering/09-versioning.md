@@ -22,7 +22,10 @@ rubric_version
 - Tool 版本；
 - Harness 配置；
 - Environment；
-- 运行参数。
+- 运行参数；
+- trial count / repetition policy。
+
+模型和 Agent 行为可能带随机性。同一 Case 跑一次，不一定足够代表真实成功率。
 
 ## Case 也需要稳定 ID
 
