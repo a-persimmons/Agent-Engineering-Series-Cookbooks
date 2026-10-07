@@ -2,6 +2,8 @@
 
 第一本书到这里结束。
 
+![从 Prompt Engineering 到 Context、Agent、Harness 与 Evaluation](/diagrams/prompt/transition.svg)
+
 如果前面的知识真的长进脑子里，你现在面对一个新 Prompt，不应该先想 Few-shot、CoT、Role 或 XML。
 
 你应该先看到：
