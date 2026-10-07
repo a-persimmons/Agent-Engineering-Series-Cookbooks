@@ -2,6 +2,8 @@
 
 Prompt 有边界。
 
+![从 Prompt 规则走向系统机制](/diagrams/prompt/prompt-to-system.svg)
+
 很多团队越过这个边界后仍然做同一件事：加规则、加示例、加“务必”、加更复杂的结构。
 
 结果是 Prompt 越来越长，系统却没有更可靠。
