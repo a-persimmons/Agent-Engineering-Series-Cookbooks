@@ -10,7 +10,7 @@
 2. **Context Engineering：控制模型看到的世界**（已完成）
 3. **Agent Engineering：让模型持续决策与行动**（已完成）
 4. **Harness Engineering：让 Agent 可靠运行**（已完成）
-5. **Evaluation Engineering：让系统可验证、可回归**（已完成初版）
+5. **Evaluation Engineering：让系统可验证、可回归**（已完成）
 
 ## 本地阅读
 
