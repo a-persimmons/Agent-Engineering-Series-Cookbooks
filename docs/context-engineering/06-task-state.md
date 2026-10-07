@@ -55,7 +55,7 @@ Checkpoint 让系统能够：
 - 人工介入；
 - 观察任务在某个时间点的状态。
 
-这已经开始触碰 Agent Runtime，但本质仍是 Context Lifecycle。
+这已经开始触碰 Agent Runtime，但要分清一层边界：**Checkpoint 本身不是 Context**。它保存的是可恢复的系统状态；恢复以后，系统仍然要从这些状态里重新装配下一轮 Runtime Context。
 
 ## 地图坐标
 
