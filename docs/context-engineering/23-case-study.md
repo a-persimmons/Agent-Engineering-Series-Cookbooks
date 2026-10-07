@@ -6,6 +6,8 @@
 
 最重要的变化不是“找一种更聪明的切片算法”。
 
+![超过窗口的日志分析 Context Pipeline](/diagrams/context/case-pipeline.svg)
+
 而是停止让 Context Window 承担“保存整个世界”的责任。
 
 ## V0：全部塞进去
