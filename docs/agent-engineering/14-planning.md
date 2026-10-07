@@ -8,6 +8,8 @@ ReAct 擅长“现在做什么”。
 
 这就是 Planning。
 
+![ReAct 管局部，Planning 管全局](/diagrams/agent/react-planning.svg)
+
 ## Plan 的价值
 
 一个 Plan 可以提供：
