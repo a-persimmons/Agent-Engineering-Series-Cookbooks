@@ -32,6 +32,8 @@ Release / Reject
 
 关键是“同一套条件”。
 
+对于非确定性 Agent，最好还包括**同样的 trial policy**：同一 Case 都跑相同次数，或使用配对比较。否则一个版本跑 1 次、另一个版本跑 5 次，结果不可直接比较。
+
 ## 不要只比较平均值
 
 至少看：
@@ -54,6 +56,14 @@ Release / Reject
 2. 信息充分 Case 没有变得过度拒答。
 
 这就是回归思维。
+
+## Capability Eval 和 Regression Eval 不完全一样
+
+Capability Eval 可以故意选择当前还很难的任务，用来回答“我们能做到什么程度”。
+
+Regression Eval 更像保护网：已经会做的关键任务应尽量保持接近稳定通过。
+
+一个能力成熟后，可以把部分 Capability Cases 提升为 Regression Cases。
 
 ## Golden Set 不是永远不变
 
