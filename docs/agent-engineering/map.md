@@ -2,6 +2,8 @@
 
 Agent Engineering 可以先压缩成一条循环：
 
+![Agent Engineering 最小 Loop](/diagrams/agent/core-loop.svg)
+
 <div class="map-card">
 
 **Goal**：系统最终要把什么事情推进到完成？  
