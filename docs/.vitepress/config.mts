@@ -62,7 +62,8 @@ export default defineConfig({
           { text: '24 下一站', link: '/prompt-engineering/24-next' }
         ]},
         { text: '附录', items: [
-          { text: 'Prompt 设计与评审清单', link: '/prompt-engineering/checklist' }
+          { text: 'Prompt 设计与评审清单', link: '/prompt-engineering/checklist' },
+          { text: '延伸阅读', link: '/prompt-engineering/references' }
         ]}
       ],
       '/context-engineering/': [
