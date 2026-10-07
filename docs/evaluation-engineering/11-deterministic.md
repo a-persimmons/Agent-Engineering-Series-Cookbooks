@@ -4,6 +4,9 @@
 
 很多指标程序可以直接检查，而且更便宜、更稳定。
 
+
+![Deterministic、LLM Judge 与 Human Eval 的分工](/diagrams/evaluation/grader-stack.svg)
+
 ## 常见确定性检查
 
 ### Schema
