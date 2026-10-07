@@ -20,6 +20,8 @@ Harness 增加 Retry，感觉更稳。
 
 主地图：
 
+![Evaluation Engineering 核心闭环](/diagrams/evaluation/core-map.svg)
+
 **Target → Cases → Rubric → Signals → Metrics → Failure Taxonomy → Regression → Production Feedback → Improvement Loop**
 
 ## 读完后应该形成三种反射
