@@ -6,6 +6,8 @@
 
 第二册只保留一张主地图：
 
+![Context Engineering 核心地图](/diagrams/context/core-map.svg)
+
 **Need → Source → Select → Shape → Budget → Lifecycle → Evaluation**
 
 以后看到 RAG、Memory、Compaction、Session、Checkpoint、MCP Resource、Tool Result，都先问：它在这张图上解决什么问题？
