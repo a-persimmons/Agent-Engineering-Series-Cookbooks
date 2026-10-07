@@ -14,7 +14,7 @@ Context Engineering 可以压缩成七个问题：
 
 </div>
 
-运行时可以画成：
+把它画成运行时链路：
 
 ~~~
 Task / State
@@ -40,21 +40,69 @@ Task / State
  Evaluation
 ~~~
 
-## 常见概念应该放在哪里
+## 这张地图有两种走法
 
-| 概念 | 地图位置 |
+### 设计时：从上往下走
+
+先不要问“用不用 RAG”。
+
+先问：
+
+1. 当前步骤要做什么判断？
+2. 为这个判断缺什么信息？
+3. 信息在哪？
+4. 哪些值得现在进入？
+5. 应该以什么形态出现？
+6. 哪些旧内容应该退出？
+7. 怎样验收这套 Context 策略？
+
+技术选型应该出现在问题之后。
+
+### 调试时：从结果往回查
+
+模型做错了，不先改 Prompt，也不先换模型。
+
+沿着反方向问：
+
+~~~text
+结果为什么错？
+↓
+Evaluation 有没有看见这个错误？
+↓
+Lifecycle 是否留下了旧信息？
+↓
+Budget 是否被噪声占满？
+↓
+Shape 是否让关键信息难以使用？
+↓
+Select 是否漏掉或选错？
+↓
+Source 有没有正确事实？
+↓
+Need 一开始是不是就判断错了？
+~~~
+
+设计和 Debug 用的是同一张地图。
+
+## 常见概念应该挂在哪里
+
+| 概念 | 更准确的位置 |
 |---|---|
 | Conversation History | Source + Lifecycle |
+| Task State | Source + Shape + Lifecycle |
 | RAG | Source + Select |
-| Memory | Source + Lifecycle |
+| Long-term Memory | Source + Select + Lifecycle |
 | Tool Result | Source + Shape + Lifecycle |
 | Summarization | Shape + Budget |
 | Compaction | Shape + Budget + Lifecycle |
 | Checkpoint | Lifecycle |
 | MCP Resources | Source |
-| Prompt Caching | Budget 的成本侧优化，不等于 Context Selection |
 | Subagent Context | Select + Isolation |
 
-真正要训练的不是记住这张表，而是形成一个反射：
+这张表不是术语分类表。
 
-> 每增加一段 Context，都要回答“为什么现在需要它、它从哪里来、什么时候该消失”。
+真正要练成的反射是：
+
+> **每增加一段 Context，都能说明它为什么现在需要、从哪里来、以什么形态进入，以及什么时候应该离开。**
+
+如果这四个问题已经会自动出现，地图就开始长进脑子里了。

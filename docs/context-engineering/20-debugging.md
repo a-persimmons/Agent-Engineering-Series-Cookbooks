@@ -1,68 +1,104 @@
-# 20｜Context Debugging：别先怪模型
+# 20｜Context Debugging：失败时沿着地图往回走
 
-当一个 Agent 做错事，第一反应经常是：
+Agent 做错事时，第一反应经常是：
 
 > 模型能力不够。
 
-但很多生产问题其实来自 Context。
+但很多生产问题其实来自模型当时看到的世界。
 
-## 一套固定诊断顺序
+Context Debugging 最重要的不是多一套术语，而是养成固定回溯顺序。
 
-### 1. Need 是否判断错了
+## 从最终错误开始
 
-系统有没有搞清这一轮真正需要什么信息？
+假设 Agent 用了一个已经失效的配置。
 
-### 2. Source 是否存在
+不要马上加一句“请使用最新配置”。
 
-信息根本不存在，还是只是没有被取到？
+沿着地图逆向查。
 
-### 3. Select 是否选错
+### Evaluation
 
-相关信息被漏掉，还是无关信息太多？
+测试里有没有“旧配置仍存在”的案例？
 
-### 4. Shape 是否不利于使用
+如果没有，系统甚至不知道这类错误值得防。
 
-关键信息是不是埋在原始日志、长文或混乱 JSON 里？
+### Lifecycle
 
-### 5. Budget 是否失衡
+旧配置为什么还活着？
 
-某类 Context 是否占用了过多注意力？
+是 Memory 没更新，Cache 没失效，还是 Task State 没刷新？
 
-### 6. Lifecycle 是否出错
+### Budget
 
-是不是用了过期状态、旧规则或旧 Memory？
+新配置虽然存在，会不会被大量历史信息淹没？
 
-### 7. Evaluation 是否没覆盖
+### Shape
 
-为什么测试阶段没有发现这类问题？
+新旧配置是否被清楚标记版本和时间？
 
-## 建立 Context Trace
+### Select
 
-对重要 Agent，最好能记录每一次模型调用时：
+这一轮为什么同时选中了两个版本？
 
-- 当前 Goal；
-- 当前 State；
-- 选择了哪些 Memory；
-- RAG 返回了什么；
-- 哪些工具结果进入了 Context；
-- 哪些内容被压缩或丢弃；
-- 最终 token / 成本；
-- 模型输出和后续动作。
+### Source
 
-没有 Context Trace，很难解释“模型为什么会这么做”。
+权威配置源到底是什么？
 
-## 一次只改变一条策略
+### Need
 
-如果同时换 Embedding、改 Top-K、增加 Memory、重写 Prompt，很难判断修复来自哪里。
+当前步骤真的需要整份配置，还是只需要其中两个字段？
 
-Context 调试同样需要控制变量。
+到这里，修复可能完全不在 Prompt。
+
+## 给常见失败建立“回家路线”
+
+~~~text
+缺事实
+→ Source / Select
+
+事实很多但模型抓不住
+→ Select / Shape / Budget
+
+用了旧信息
+→ Lifecycle
+
+把旧推断当事实
+→ Shape / Lifecycle
+
+历史越长越不稳定
+→ Select / Budget / Lifecycle
+
+RAG 检索不错但答案仍差
+→ Shape / Output / Evaluation
+~~~
+
+这不是死规则，只是起始定位。
+
+## Context Trace 是调试前提
+
+对重要 Agent，至少要能还原一次调用时：
+
+- 当前 Goal 和 State；
+- 加载了哪些 History；
+- 取回哪些 Memory；
+- RAG 返回哪些证据；
+- 哪些 Tool Result 被保留；
+- 哪些内容被压缩或删除。
+
+如果无法回答“模型当时到底看见了什么”，很多调试只能靠猜。
+
+## 一次只改变一条主要策略
+
+不要同时换 Embedding、调 Top-K、加 Memory、改 Prompt。
+
+Context Engineering 同样需要控制变量。
 
 ## 地图坐标
 
-Context Debugging 就是沿着：
+设计时：
 
 **Need → Source → Select → Shape → Budget → Lifecycle → Evaluation**
 
-逐层定位。
+调试时，从失败沿着同一条链反向追。
 
-当这条链变成习惯，Context Engineering 才真正成为可调试系统。
+当这两个动作形成肌肉记忆，第二册的地图才真正开始工作。
