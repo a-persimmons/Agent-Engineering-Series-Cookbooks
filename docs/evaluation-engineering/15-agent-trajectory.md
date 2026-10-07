@@ -14,6 +14,8 @@ Agent 最容易欺骗 Eval 的情况：
 
 如果只看 Outcome，这些问题都看不见。
 
+![Agent Eval：Outcome 与 Trajectory](/diagrams/evaluation/outcome-trajectory.svg)
+
 ## Agent Eval 至少两层
 
 ### Outcome
