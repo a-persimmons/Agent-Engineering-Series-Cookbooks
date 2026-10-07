@@ -18,6 +18,8 @@ V2 = 93%
 
 V2 可能根本不能上线。
 
+![Cases 与 Slices：平均分不能替代风险切片](/diagrams/evaluation/cases-slices.svg)
+
 ## 什么是 Slice
 
 按某个有业务意义的维度切分 Dataset。
