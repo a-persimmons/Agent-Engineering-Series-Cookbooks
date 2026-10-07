@@ -6,6 +6,8 @@ Long-term Memory 的第一道问题不是“存到哪里”，而是：
 
 这一章只讨论 **Memory 作为一种 Context Source**。写入、检索、更新和遗忘的完整机制留到第 17 章。
 
+![History、Task State 与 Long-term Memory 的分工](/diagrams/context/history-state-memory.svg)
+
 ## 什么更像长期记忆
 
 ### 稳定事实
