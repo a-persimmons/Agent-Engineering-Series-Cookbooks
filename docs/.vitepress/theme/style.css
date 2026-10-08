@@ -32,3 +32,147 @@
   box-shadow: 0 8px 28px rgba(28, 47, 38, 0.06);
   background: #f5f9f7;
 }
+
+
+/* Homepage redesign */
+.VPHomeHero {
+  padding-top: 72px !important;
+  padding-bottom: 42px !important;
+}
+
+.VPHomeHero .container {
+  max-width: 1480px !important;
+}
+
+.VPHomeHero .main {
+  max-width: 650px !important;
+}
+
+.VPHomeHero .name {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.VPHomeHero .text {
+  max-width: 620px;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+.VPHomeHero .tagline {
+  max-width: 650px;
+  line-height: 1.7;
+}
+
+.VPHomeHero .actions {
+  max-width: 690px;
+  gap: 10px 8px;
+}
+
+.VPHomeHero .action .VPButton {
+  border-radius: 999px;
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+.VPHomeHero .image {
+  width: 56% !important;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.VPHomeHero .image-container {
+  width: min(100%, 720px) !important;
+  height: auto !important;
+  transform: none !important;
+}
+
+.VPHomeHero .image-bg {
+  display: none !important;
+}
+
+.VPHomeHero .image-src {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: 720px !important;
+  max-height: none !important;
+  border: 1px solid rgba(49, 92, 72, 0.12);
+  border-radius: 30px;
+  box-shadow: 0 24px 70px rgba(31, 55, 44, 0.10);
+}
+
+.VPFeatures {
+  padding-top: 12px !important;
+}
+
+.VPFeatures .container {
+  max-width: 1480px !important;
+}
+
+.VPFeatures .item .VPFeature {
+  height: 100%;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--vp-c-bg-soft) 88%, transparent);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.VPFeatures .item .VPFeature:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--vp-c-brand-1) 30%, var(--vp-c-divider));
+  box-shadow: 0 14px 34px rgba(31, 55, 44, 0.08);
+}
+
+.VPFeatures .icon {
+  border-radius: 14px !important;
+}
+
+.VPFeatures .link-text {
+  font-weight: 650;
+}
+
+.VPNavBarMenuGroup .button {
+  border-radius: 10px;
+}
+
+@media (min-width: 1280px) {
+  .VPFeatures .item {
+    width: 20% !important;
+  }
+}
+
+@media (max-width: 959px) {
+  .VPHomeHero .image {
+    width: 100% !important;
+    min-height: 0;
+    margin-top: 38px !important;
+  }
+
+  .VPHomeHero .image-container {
+    width: min(100%, 760px) !important;
+  }
+
+  .VPHomeHero .main {
+    max-width: 760px !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .VPHomeHero {
+    padding-top: 44px !important;
+  }
+
+  .VPHomeHero .image-src {
+    border-radius: 20px;
+  }
+
+  .VPHomeHero .action .VPButton {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
