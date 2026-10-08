@@ -10,13 +10,18 @@ export default defineConfig({
   themeConfig: {
     logo: '🧭',
     nav: [
-      { text: '系列首页', link: '/' },
-      { text: '全系列总地图', link: '/series-map' },
-      { text: '第一本：Prompt', link: '/prompt-engineering/' },
-      { text: '第二本：Context', link: '/context-engineering/' },
-      { text: '第三本：Agent', link: '/agent-engineering/' },
-      { text: '第四本：Harness', link: '/harness-engineering/' },
-      { text: '第五本：Evaluation', link: '/evaluation-engineering/' },
+      { text: '首页', link: '/' },
+      { text: '系列总地图', link: '/series-map' },
+      {
+        text: '系列导航',
+        items: [
+          { text: '系列1：Prompt', link: '/prompt-engineering/' },
+          { text: '系列2：Context', link: '/context-engineering/' },
+          { text: '系列3：Agent', link: '/agent-engineering/' },
+          { text: '系列4：Harness', link: '/harness-engineering/' },
+          { text: '系列5：Evaluation', link: '/evaluation-engineering/' }
+        ]
+      },
       { text: 'GitHub', link: 'https://github.com/a-persimmons/Agent-Engineering-Series-Cookbooks' }
     ],
     sidebar: {
